@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://holaxapps.github.io/"/>
-  <updated>2017-04-16T15:56:19.000Z</updated>
+  <updated>2017-04-16T16:15:27.000Z</updated>
   <id>https://holaxapps.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://holaxapps.github.io/2017/04/16/git-page-and-hexo/"/>
     <id>https://holaxapps.github.io/2017/04/16/git-page-and-hexo/</id>
     <published>2017-04-16T15:37:53.000Z</published>
-    <updated>2017-04-16T15:56:19.000Z</updated>
+    <updated>2017-04-16T16:15:27.000Z</updated>
     
     <content type="html"><![CDATA[<p>이 포스팅에서는 Github Page를 통해 손쉽게 기술 블로그를 위한 Hosting을 해보고 기술 관련 문서를 손쉽게 관리 할 수 있는 방법을 소개하고자 합니다.</p>
 <h2 id="Git-Page로-빠르게-Hosting-하기"><a href="#Git-Page로-빠르게-Hosting-하기" class="headerlink" title="Git Page로 빠르게 Hosting 하기"></a>Git Page로 빠르게 Hosting 하기</h2><h3 id="Github-Repository-생성하기"><a href="#Github-Repository-생성하기" class="headerlink" title="Github Repository 생성하기"></a>Github Repository 생성하기</h3><ul>
@@ -60,8 +60,6 @@
 &lt;h2 id=&quot;Git-Page로-빠르게-Hosting-하기&quot;&gt;&lt;a href
     
     </summary>
-    
-      <category term="Git" scheme="https://holaxapps.github.io/categories/Git/"/>
     
     
       <category term="git" scheme="https://holaxapps.github.io/tags/git/"/>
