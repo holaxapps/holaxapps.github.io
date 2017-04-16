@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://holaxapps.github.io/"/>
-  <updated>2017-04-16T15:39:44.000Z</updated>
+  <updated>2017-04-16T15:42:59.000Z</updated>
   <id>https://holaxapps.github.io/</id>
   
   <author>
@@ -16,17 +16,17 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>git-page-and-hexo</title>
+    <title>Github Page와 Hexo를 통해 10분만에 기술 블로그 만들기</title>
     <link href="https://holaxapps.github.io/2017/04/16/git-page-and-hexo/"/>
     <id>https://holaxapps.github.io/2017/04/16/git-page-and-hexo/</id>
     <published>2017-04-16T15:37:53.000Z</published>
-    <updated>2017-04-16T15:39:44.000Z</updated>
+    <updated>2017-04-16T15:42:59.000Z</updated>
     
-    <content type="html"><![CDATA[<p>이 포스팅에서는 Github Page를 통해 손쉽게 개발 블로그를 위한 Hosting을 해보고 기술 관련 문서를 효율적으로 관리하고 알릴 수 있는 방법을 소개하고자 합니다.</p>
+    <content type="html"><![CDATA[<p>이 포스팅에서는 Github Page를 통해 손쉽게 기술 블로그를 위한 Hosting을 해보고 기술 관련 문서를 손쉽게 관리 할 수 있는 방법을 소개하고자 합니다.</p>
 <h2 id="Git-Page로-빠르게-Hosting-하기"><a href="#Git-Page로-빠르게-Hosting-하기" class="headerlink" title="Git Page로 빠르게 Hosting 하기"></a>Git Page로 빠르게 Hosting 하기</h2><h3 id="Github-Repository-생성하기"><a href="#Github-Repository-생성하기" class="headerlink" title="Github Repository 생성하기"></a>Github Repository 생성하기</h3><ul>
 <li>[x] + New Repository</li>
 <li>[x] Repository 이름은 USERNAME.github.io</li>
-<li>[x] Public / Private 중 Public 선택 </li>
+<li>[x] Public / Private 중 Public 선택</li>
 <li>[x] Initialize this repository with a README을 체크한다</li>
 <li>[x] 마지막으로 Create Repository 버튼을 통해 Repository 생성</li>
 </ul>
@@ -56,8 +56,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;이 포스팅에서는 Github Page를 통해 손쉽게 개발 블로그를 위한 Hosting을 해보고 기술 관련 문서를 효율적으로 관리하고 알릴 수 있는 방법을 소개하고자 합니다.&lt;/p&gt;
-&lt;h2 id=&quot;Git-Page로-빠르게-Hosting-하기&quot;&gt;&lt;a
+      &lt;p&gt;이 포스팅에서는 Github Page를 통해 손쉽게 기술 블로그를 위한 Hosting을 해보고 기술 관련 문서를 손쉽게 관리 할 수 있는 방법을 소개하고자 합니다.&lt;/p&gt;
+&lt;h2 id=&quot;Git-Page로-빠르게-Hosting-하기&quot;&gt;&lt;a href
     
     </summary>
     
