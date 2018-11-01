@@ -4,7 +4,7 @@
   <url>
     <loc>https://www.holaxprogramming.com/2018/04/15/react-optimizing-virtual-dom-explained/</loc>
     
-    <lastmod>2018-04-27T06:51:00.068Z</lastmod>
+    <lastmod>2018-05-29T20:15:35.687Z</lastmod>
     
   </url>
   
@@ -23,14 +23,14 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2011/10/11/spring-mvc-overview/</loc>
+    <loc>https://www.holaxprogramming.com/2012/01/12/struts-interceptor/</loc>
     
     <lastmod>2018-04-27T06:49:11.209Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2012/01/12/struts-interceptor/</loc>
+    <loc>https://www.holaxprogramming.com/2011/10/11/spring-mvc-overview/</loc>
     
     <lastmod>2018-04-27T06:49:11.209Z</lastmod>
     
@@ -40,20 +40,6 @@
     <loc>https://www.holaxprogramming.com/2012/01/12/struts-and-spring-mvc/</loc>
     
     <lastmod>2018-04-27T06:49:11.209Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2015/10/16/spring-boot-with-jdbc/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.208Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2015/10/12/spring-boot-with-github/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.208Z</lastmod>
     
   </url>
   
@@ -72,35 +58,28 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2015/11/12/spring-boot-mybatis-typehandler/</loc>
+    <loc>https://www.holaxprogramming.com/2015/10/16/spring-boot-with-jdbc/</loc>
     
-    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2015/10/10/spring-boot-multi-datasources/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
+    <lastmod>2018-04-27T06:49:11.208Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2015/05/08/spring-boot-get-started/</loc>
+    <loc>https://www.holaxprogramming.com/2015/10/12/spring-boot-with-github/</loc>
     
-    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2015/05/10/spring-boot-environment/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
+    <lastmod>2018-04-27T06:49:11.208Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.holaxprogramming.com/2015/05/29/spring-boot-and-loaded/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2015/11/12/spring-boot-mybatis-typehandler/</loc>
     
     <lastmod>2018-04-27T06:49:11.207Z</lastmod>
     
@@ -114,14 +93,35 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/11/14/scala-hello-world/</loc>
+    <loc>https://www.holaxprogramming.com/2015/10/10/spring-boot-multi-datasources/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2015/05/10/spring-boot-environment/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2015/05/08/spring-boot-get-started/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2015/05/12/spring-boot-and-gradle/</loc>
     
     <lastmod>2018-04-27T06:49:11.206Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/11/18/scala-value-naming/</loc>
+    <loc>https://www.holaxprogramming.com/2017/11/14/scala-hello-world/</loc>
     
     <lastmod>2018-04-27T06:49:11.206Z</lastmod>
     
@@ -135,9 +135,16 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2015/05/12/spring-boot-and-gradle/</loc>
+    <loc>https://www.holaxprogramming.com/2017/11/18/scala-value-naming/</loc>
     
     <lastmod>2018-04-27T06:49:11.206Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2017/12/21/node-yarn-tutorials/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.205Z</lastmod>
     
   </url>
   
@@ -156,7 +163,7 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/12/21/node-yarn-tutorials/</loc>
+    <loc>https://www.holaxprogramming.com/2017/06/15/python-get-started/</loc>
     
     <lastmod>2018-04-27T06:49:11.205Z</lastmod>
     
@@ -170,14 +177,7 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/06/15/python-get-started/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.205Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2013/05/01/java-string-builder/</loc>
+    <loc>https://www.holaxprogramming.com/2013/07/16/java-jvm-runtime-data-area/</loc>
     
     <lastmod>2018-04-27T06:49:11.204Z</lastmod>
     
@@ -191,14 +191,14 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2014/02/12/java-list-interface/</loc>
+    <loc>https://www.holaxprogramming.com/2013/05/01/java-string-builder/</loc>
     
     <lastmod>2018-04-27T06:49:11.204Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2013/07/16/java-jvm-runtime-data-area/</loc>
+    <loc>https://www.holaxprogramming.com/2014/02/12/java-list-interface/</loc>
     
     <lastmod>2018-04-27T06:49:11.204Z</lastmod>
     
@@ -212,6 +212,13 @@
   </url>
   
   <url>
+    <loc>https://www.holaxprogramming.com/2017/08/16/java-history/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.203Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.holaxprogramming.com/2013/07/20/java-jvm-gc/</loc>
     
     <lastmod>2018-04-27T06:49:11.203Z</lastmod>
@@ -220,13 +227,6 @@
   
   <url>
     <loc>https://www.holaxprogramming.com/2013/07/08/java-jvm-bytecode/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.203Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2017/08/16/java-history/</loc>
     
     <lastmod>2018-04-27T06:49:11.203Z</lastmod>
     
@@ -268,14 +268,14 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2018/01/20/graphql-vs-restful-api/</loc>
+    <loc>https://www.holaxprogramming.com/2016/10/09/ios-swift-get-started/</loc>
     
     <lastmod>2018-04-27T06:49:11.201Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2016/10/09/ios-swift-get-started/</loc>
+    <loc>https://www.holaxprogramming.com/2018/01/20/graphql-vs-restful-api/</loc>
     
     <lastmod>2018-04-27T06:49:11.201Z</lastmod>
     
@@ -317,14 +317,14 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/08/26/git-commands/</loc>
+    <loc>https://www.holaxprogramming.com/2017/06/12/encryption-with-rsa/</loc>
     
     <lastmod>2018-04-27T06:49:11.199Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/06/12/encryption-with-rsa/</loc>
+    <loc>https://www.holaxprogramming.com/2013/01/10/devops-was-clientabort-exception/</loc>
     
     <lastmod>2018-04-27T06:49:11.199Z</lastmod>
     
@@ -338,7 +338,7 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2013/01/10/devops-was-clientabort-exception/</loc>
+    <loc>https://www.holaxprogramming.com/2017/08/26/git-commands/</loc>
     
     <lastmod>2018-04-27T06:49:11.199Z</lastmod>
     
@@ -478,14 +478,14 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2014/12/29/android-testing/</loc>
+    <loc>https://www.holaxprogramming.com/2016/10/21/aws-ec2-get-started/</loc>
     
     <lastmod>2018-04-27T06:49:11.192Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2016/10/21/aws-ec2-get-started/</loc>
+    <loc>https://www.holaxprogramming.com/2014/12/29/android-testing/</loc>
     
     <lastmod>2018-04-27T06:49:11.192Z</lastmod>
     
