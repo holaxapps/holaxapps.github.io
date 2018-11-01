@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.holaxprogramming.com/2018/11/01/git-commands/</loc>
+    
+    <lastmod>2018-11-01T14:25:00.042Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.holaxprogramming.com/2018/04/15/react-optimizing-virtual-dom-explained/</loc>
     
     <lastmod>2018-05-29T20:15:35.687Z</lastmod>
@@ -30,14 +37,14 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2012/01/12/struts-and-spring-mvc/</loc>
+    <loc>https://www.holaxprogramming.com/2012/01/12/struts-interceptor/</loc>
     
     <lastmod>2018-04-27T06:49:11.209Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2012/01/12/struts-interceptor/</loc>
+    <loc>https://www.holaxprogramming.com/2012/01/12/struts-and-spring-mvc/</loc>
     
     <lastmod>2018-04-27T06:49:11.209Z</lastmod>
     
@@ -51,7 +58,7 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2015/10/18/spring-boot-with-mybatis/</loc>
+    <loc>https://www.holaxprogramming.com/2012/01/29/spring-mvc-content-negotiating-view-resolver/</loc>
     
     <lastmod>2018-04-27T06:49:11.208Z</lastmod>
     
@@ -65,35 +72,14 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2012/01/29/spring-mvc-content-negotiating-view-resolver/</loc>
+    <loc>https://www.holaxprogramming.com/2015/10/18/spring-boot-with-mybatis/</loc>
     
     <lastmod>2018-04-27T06:49:11.208Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2015/10/10/spring-boot-multi-datasources/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.holaxprogramming.com/2015/05/08/spring-boot-get-started/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2015/11/20/spring-boot-what-is-next/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2015/11/12/spring-boot-mybatis-typehandler/</loc>
     
     <lastmod>2018-04-27T06:49:11.207Z</lastmod>
     
@@ -114,14 +100,35 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/11/18/scala-value-naming/</loc>
+    <loc>https://www.holaxprogramming.com/2015/11/12/spring-boot-mybatis-typehandler/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2015/11/20/spring-boot-what-is-next/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2015/10/10/spring-boot-multi-datasources/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.207Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2017/11/14/scala-hello-world/</loc>
     
     <lastmod>2018-04-27T06:49:11.206Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/11/14/scala-hello-world/</loc>
+    <loc>https://www.holaxprogramming.com/2017/06/17/python-with-test/</loc>
     
     <lastmod>2018-04-27T06:49:11.206Z</lastmod>
     
@@ -135,7 +142,7 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/06/17/python-with-test/</loc>
+    <loc>https://www.holaxprogramming.com/2017/11/18/scala-value-naming/</loc>
     
     <lastmod>2018-04-27T06:49:11.206Z</lastmod>
     
@@ -156,7 +163,7 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/06/15/python-get-started/</loc>
+    <loc>https://www.holaxprogramming.com/2017/10/30/node-environments/</loc>
     
     <lastmod>2018-04-27T06:49:11.205Z</lastmod>
     
@@ -170,7 +177,7 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/10/30/node-environments/</loc>
+    <loc>https://www.holaxprogramming.com/2017/06/15/python-get-started/</loc>
     
     <lastmod>2018-04-27T06:49:11.205Z</lastmod>
     
@@ -178,6 +185,13 @@
   
   <url>
     <loc>https://www.holaxprogramming.com/2014/09/24/java-open-jdk/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.204Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2013/07/16/java-jvm-runtime-data-area/</loc>
     
     <lastmod>2018-04-27T06:49:11.204Z</lastmod>
     
@@ -205,21 +219,7 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2013/07/16/java-jvm-runtime-data-area/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.204Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.holaxprogramming.com/2017/08/16/java-history/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.203Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2013/07/08/java-jvm-bytecode/</loc>
     
     <lastmod>2018-04-27T06:49:11.203Z</lastmod>
     
@@ -233,13 +233,6 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2012/12/18/java-hello-j2ee/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.203Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.holaxprogramming.com/2012/12/17/java-hello-servlet/</loc>
     
     <lastmod>2018-04-27T06:49:11.203Z</lastmod>
@@ -247,7 +240,21 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2012/03/28/java-basic-io/</loc>
+    <loc>https://www.holaxprogramming.com/2012/12/18/java-hello-j2ee/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.203Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2013/07/08/java-jvm-bytecode/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.203Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2013/07/20/java-basic-string-class/</loc>
     
     <lastmod>2018-04-27T06:49:11.202Z</lastmod>
     
@@ -261,28 +268,14 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2013/07/20/java-basic-string-class/</loc>
+    <loc>https://www.holaxprogramming.com/2012/03/28/java-basic-io/</loc>
     
     <lastmod>2018-04-27T06:49:11.202Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/03/03/holaxprogramming-overview/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.201Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.holaxprogramming.com/2018/01/20/graphql-vs-restful-api/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.201Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2015/03/04/ios-memory-management/</loc>
     
     <lastmod>2018-04-27T06:49:11.201Z</lastmod>
     
@@ -296,14 +289,21 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/12/20/github-tips/</loc>
+    <loc>https://www.holaxprogramming.com/2015/03/04/ios-memory-management/</loc>
     
-    <lastmod>2018-04-27T06:49:11.200Z</lastmod>
+    <lastmod>2018-04-27T06:49:11.201Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/04/16/github-page-and-hexo/</loc>
+    <loc>https://www.holaxprogramming.com/2017/03/03/holaxprogramming-overview/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.201Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2017/12/20/github-tips/</loc>
     
     <lastmod>2018-04-27T06:49:11.200Z</lastmod>
     
@@ -317,7 +317,14 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/08/26/git-commands/</loc>
+    <loc>https://www.holaxprogramming.com/2017/04/16/github-page-and-hexo/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.200Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2017/06/12/encryption-with-rsa/</loc>
     
     <lastmod>2018-04-27T06:49:11.199Z</lastmod>
     
@@ -332,13 +339,6 @@
   
   <url>
     <loc>https://www.holaxprogramming.com/2014/07/27/devops-maven-profiles/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.199Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2017/06/12/encryption-with-rsa/</loc>
     
     <lastmod>2018-04-27T06:49:11.199Z</lastmod>
     
@@ -380,13 +380,6 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2017/10/16/devops-aws-codestar/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.196Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.holaxprogramming.com/2015/08/24/devops-api-gateway/</loc>
     
     <lastmod>2018-04-27T06:49:11.196Z</lastmod>
@@ -394,9 +387,9 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2016/11/17/blahblah-writing-as-programmer/</loc>
+    <loc>https://www.holaxprogramming.com/2017/10/16/devops-aws-codestar/</loc>
     
-    <lastmod>2018-04-27T06:49:11.195Z</lastmod>
+    <lastmod>2018-04-27T06:49:11.196Z</lastmod>
     
   </url>
   
@@ -415,6 +408,13 @@
   </url>
   
   <url>
+    <loc>https://www.holaxprogramming.com/2016/11/17/blahblah-writing-as-programmer/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.195Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.holaxprogramming.com/2013/01/10/blahblah-study-in-web-api/</loc>
     
     <lastmod>2018-04-27T06:49:11.194Z</lastmod>
@@ -422,14 +422,14 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2014/04/08/blahblah-remind-how-to-ci/</loc>
+    <loc>https://www.holaxprogramming.com/2013/08/10/blahblah-my-first-sdk-release/</loc>
     
     <lastmod>2018-04-27T06:49:11.194Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2013/08/10/blahblah-my-first-sdk-release/</loc>
+    <loc>https://www.holaxprogramming.com/2014/04/08/blahblah-remind-how-to-ci/</loc>
     
     <lastmod>2018-04-27T06:49:11.194Z</lastmod>
     
@@ -450,14 +450,14 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2013/01/05/blahblah-hello-newbies/</loc>
+    <loc>https://www.holaxprogramming.com/2013/01/11/blahblah-i-need-some-place-to-talk/</loc>
     
     <lastmod>2018-04-27T06:49:11.193Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2013/01/11/blahblah-i-need-some-place-to-talk/</loc>
+    <loc>https://www.holaxprogramming.com/2014/05/02/blahblah-create-framework-myself/</loc>
     
     <lastmod>2018-04-27T06:49:11.193Z</lastmod>
     
@@ -471,7 +471,7 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2014/05/02/blahblah-create-framework-myself/</loc>
+    <loc>https://www.holaxprogramming.com/2013/01/05/blahblah-hello-newbies/</loc>
     
     <lastmod>2018-04-27T06:49:11.193Z</lastmod>
     
@@ -520,13 +520,6 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2013/03/27/android-fundamentals/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.189Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.holaxprogramming.com/2013/03/25/android-get-started/</loc>
     
     <lastmod>2018-04-27T06:49:11.189Z</lastmod>
@@ -534,7 +527,7 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2015/07/29/android-deploy-to-jcenter/</loc>
+    <loc>https://www.holaxprogramming.com/2013/03/27/android-fundamentals/</loc>
     
     <lastmod>2018-04-27T06:49:11.189Z</lastmod>
     
@@ -548,6 +541,20 @@
   </url>
   
   <url>
+    <loc>https://www.holaxprogramming.com/2015/07/29/android-deploy-to-jcenter/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.189Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.holaxprogramming.com/2014/04/24/algorithms-fibo-and-dynamic-programming/</loc>
+    
+    <lastmod>2018-04-27T06:49:11.188Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.holaxprogramming.com/2014/12/29/android-ci-environments/</loc>
     
     <lastmod>2018-04-27T06:49:11.188Z</lastmod>
@@ -555,7 +562,7 @@
   </url>
   
   <url>
-    <loc>https://www.holaxprogramming.com/2014/04/24/algorithms-fibo-and-dynamic-programming/</loc>
+    <loc>https://www.holaxprogramming.com/2013/08/25/android-big-view-styles/</loc>
     
     <lastmod>2018-04-27T06:49:11.188Z</lastmod>
     
@@ -570,13 +577,6 @@
   
   <url>
     <loc>https://www.holaxprogramming.com/2017/12/29/algorithms-learning-strategy/</loc>
-    
-    <lastmod>2018-04-27T06:49:11.188Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.holaxprogramming.com/2013/08/25/android-big-view-styles/</loc>
     
     <lastmod>2018-04-27T06:49:11.188Z</lastmod>
     
