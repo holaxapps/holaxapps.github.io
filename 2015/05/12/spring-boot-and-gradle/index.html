@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="ko" prefix="og: http://ogp.me/ns#"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>Gradle을 통해 프로젝트를 효율적으로 관리하자 · 안녕 프로그래밍</title><meta name="description" content="예제 중심의 Spring Boot 시작하기"><meta name="og:title" content="Gradle을 통해 프로젝트를 효율적으로 관리하자"><meta name="og:type" content="website"><meta name="og:url" content="https://www.holaxprogramming.com/2015/05/12/spring-boot-and-gradle/"><meta name="og:image" content="https://plugins.gradle.org/shared-assets/shared/images/gradle-logo-horizontal.svg"><meta name="og:image:secure_url" content="https://plugins.gradle.org/shared-assets/shared/images/gradle-logo-horizontal.svg"><meta name="og:description" content="예제 중심의 Spring Boot 시작하기"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/chiangmai.css"><meta name="steem:author" content="@stunstunstun"><meta name="fb:app_id" content="1258629384258634"><link rel="search" type="application/opensearchdescription+xml" href="https://www.holaxprogramming.com/atom.xml" title="안녕 프로그래밍"></head><body class="post"><div id="fb-root"></div><div class="wrap"><header><nav class="navi-post"><a class="navi-post-back" href="javascript:history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="navi-post-home" href="/"><i class="fa fa-home" aria-hidden="true"></i></a></nav></header><main class="post"><div class="post"><article class="post-block"><h1 class="post-title">Gradle을 통해 프로젝트를 효율적으로 관리하자</h1><div class="post-info"><div class="post-info-profile"><a href="https://github.com/stunstunstun" target="_blank"><img src="/image/profile.jpg"></a></div><div class="post-info-details"><div class="post-categories"><a href="/categories/spring-boot" target="_self"><span>SPRING-BOOT</span></a></div><div class="post-date">2015년 5월 12일</div></div></div><div class="post-share"><div class="fb-like" data-href="https://www.holaxprogramming.com/2015/05/12/spring-boot-and-gradle/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false">                 </div><div class="fb-share-button" data-href="https://www.holaxprogramming.com/2015/05/12/spring-boot-and-gradle/" data-layout="button" data-size="small" data-mobile-iframe="true"></div><div class="fb-follow" data-href="https://www.facebook.com/holaxprogramming/" data-layout="button_count" data-size="small" data-show-faces="true"></div></div><div class="post-content"><p>이전 글에서는 Spring Boot 애플리케이션을 개발하기 위해 Java, Gradle 환경을 구성하였다. 앞으로 성공적으로 프로젝트를 관리하기 위해서는 Gradle이라는 빌드 도구와 친해질 필요가 있다.</p>
+<p><img src="https://gradle.org/images/homepage/gradle-org-hero.png" width="600"></p>
+<h2 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle?"></a>Gradle?</h2><p>그 이유는 소프트웨어의 복잡도는 점점 복잡해지며, 이를 해결하기 위해서는 외부의 다양한 모듈을 이용할 수 있어야 하며 모듈간의 의존 관계를 효과적으로 관리해야 한다. 뿐만 아니라 Gradle은 큰 노력없이 애플리케이션을 빌드, 테스트, 배포하는 과정을 자동화할 수 있도록 도와준다.</p>
+<p><img src="https://gradle.org/images/homepage/android-blue.svg"></p>
+<blockquote>
+<p>소규모의 스타트업부터 대표적으로 안드로이드, 넷플릭스, 링크드인과 같은 대규모의 서비스에서도 Gradle을 통해 프로젝트를 빌드하고 있다.</p>
+</blockquote>
+<p>이번 글에서의 우리의 목표는 생소한 Gradle과 첫 인사를 하는 것이다. 그 시작으로 Spring Boot과 JPA를 통해 Database와 연동하는 간단한 예제를 만들어 보겠다.</p>
+<h4 id="STS-IDE에서-Gradle-프로젝트-생성하기"><a href="#STS-IDE에서-Gradle-프로젝트-생성하기" class="headerlink" title="STS IDE에서 Gradle 프로젝트 생성하기"></a>STS IDE에서 Gradle 프로젝트 생성하기</h4><p>Gradle 프로젝트를 생성하는 방법은 다양한데, 먼저 IDE를 통해서 프로젝트를 생성하는 방법을 알아보고 그 밖에 웹페이지, Spring Boot의 CLI를 통해 생성하는 방법도 살펴보자. STS IDE를 실행하고 메메뉴의 <code>New Project &gt; Spring Starter Project</code>를 통해 프로젝트를 생성할 수 있다.</p>
+<p><code>spring staters</code>는 일종의 특정한 기능을 제공하기 위한 Module의 모음으로 이전과 같이 샘플 코드에서 Module의 의존 관계를 설정하기 위해 코드를 Copy &amp; Paste 할 필요가 없다. 프로젝트의 사용 목적에 따라 Spring Boot에서 제공하는 starter를 선택하여 프로젝트를 생성하면 된다. 예를 들면 Spring과 JPA를 통해 Database에 접근이 필요한 애플리케이션을 만들고 싶다면 <code>spring-boot-starter-data-jpa</code>를 프로젝트에 추가하는 것만으로 모든 것이 해결된다.</p>
+<p><img src="http://image.toast.com/aaaaahq/create-boot-2.png" alt="create-project-2"></p>
+<h4 id="Spring-Boot-Initializr-페이지에서-프로젝트-생성하기"><a href="#Spring-Boot-Initializr-페이지에서-프로젝트-생성하기" class="headerlink" title="Spring Boot Initializr 페이지에서 프로젝트 생성하기"></a>Spring Boot Initializr 페이지에서 프로젝트 생성하기</h4><p>Spring Initializr라는 웹 페이지를 통해 아래와 같이 필요한 정보를 입력하고 <code>Generate Project</code>버튼을 누르는 것만으로 프로젝트를 손쉽게 생성할 수 있다.</p>
+<blockquote>
+<p><a href="http://start.spring.io" target="_blank" rel="external">http://start.spring.io</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Generate a `Gradle Project` with Spring Boot 1.4.1</span><br><span class="line">Group - com.stunstun.spring</span><br><span class="line">Artifact - spring-boot-jpa-example</span><br><span class="line">Dependencies - JPA, H2</span><br></pre></td></tr></table></figure>
+<p><img src="http://image.toast.com/aaaaahq/create-boot-3.png" alt="create-project-3"></p>
+<h4 id="Spring-Boot-CLI를-통해-프로젝트-생성하기"><a href="#Spring-Boot-CLI를-통해-프로젝트-생성하기" class="headerlink" title="Spring Boot CLI를 통해 프로젝트 생성하기"></a>Spring Boot CLI를 통해 프로젝트 생성하기</h4><p>Spring Boot CLI는 Spring Boot 프로젝트를 위한 Command Line Tool이다. 프로젝트 생성을 자동화하고 싶거나 Terminal에서의 경험이 익숙하다면 IDE에서 독립적으로 Gradle 또는 Maven 프로젝트를 생성할 수 있다. </p>
+<p><code>Spring Boot CLI 설치하기</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ brew tap pivotal/tap</span><br><span class="line">$ brew install springboot</span><br><span class="line">$ spring --version</span><br></pre></td></tr></table></figure>
+<p><code>Spring Boot CLI 업데이트</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew update</span><br><span class="line">$ brew upgrade springboot</span><br></pre></td></tr></table></figure>
+<p><code>수동으로 CLI 설치하기</code></p>
+<p>Spring Boot CLI는 아래의 페이지에서 다운로드 할 수 있다.</p>
+<blockquote>
+<p><a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-started-installing-the-cli" target="_blank" rel="external">https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-started-installing-the-cli</a></p>
+</blockquote>
+<p><code>Spring Boot CLI를 통한 프로젝트 생성</code></p>
+<p>아래의 예제는 Spring Boot을 통해 JPA를 통해 Database를 연동하는 웹 프로젝트를 생성한다. 빌드 도구는 <code>--build</code> 옵션을 통해 지정할 수 있다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ spring init --build=gradle --java-version=1.8 --dependencies=data-jpa spring-boot-jpa-example</span><br></pre></td></tr></table></figure>
+<p><code>Spring Boot CLI에 대한 더 많은 정보들은 아래를 확인하자</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ spring help</span><br><span class="line">$ spring help run</span><br><span class="line">$ spring help init</span><br><span class="line">$ spring init --list</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#cli" target="_blank" rel="external">https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#cli</a></p>
+</blockquote>
+<h2 id="Gradle-프로젝트"><a href="#Gradle-프로젝트" class="headerlink" title="Gradle 프로젝트"></a>Gradle 프로젝트</h2><p>지금까지 다양한 방법으로 Gradle 프로젝트를 생성하는 방법을 살펴보았다. 자! 이제 본격적으로 Spring Boot을 통해 애플리케이션을 개발해 볼 차례다. 개발하는 과정에서 프로젝트의 빌드 및 테스트하는 과정에서 다양한 요구사항이 발생할 수 있는데, Gradle Task를 통해 이를 자동화할 수 있다.</p>
+<p>먼저 예제를 통해 생성한 Gradle 프로젝트의 구조를 살펴본 뒤 Gradle의 Task에 대해 자세히 살펴보도록 하겠다.</p>
+<h4 id="Gradle-프로젝트의-기본적인-구조"><a href="#Gradle-프로젝트의-기본적인-구조" class="headerlink" title="Gradle 프로젝트의 기본적인 구조"></a>Gradle 프로젝트의 기본적인 구조</h4><table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/src/main/java</td>
+<td>런타임에 필요한 자바 클래스</td>
+</tr>
+<tr>
+<td>/src/main/resources</td>
+<td>런타임에 필요한 리소스</td>
+</tr>
+<tr>
+<td>/src/test/java</td>
+<td>테스트 환경에 필요한 자바 클래스</td>
+</tr>
+<tr>
+<td>/src/test/resources</td>
+<td>테스트 환경에 필요한 리소스</td>
+</tr>
+<tr>
+<td>build.gradle</td>
+<td>Gradle Tasks</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Gradle-시작하기"><a href="#Gradle-시작하기" class="headerlink" title="Gradle 시작하기"></a>Gradle 시작하기</h4><p><code>build.gradle</code></p>
+<p><code>Java 웹 애플리케이션 빌드하기</code></p>
+<h4 id="Gradle-Task-실행하기"><a href="#Gradle-Task-실행하기" class="headerlink" title="Gradle Task 실행하기"></a>Gradle Task 실행하기</h4><h4 id="예제-프로젝트의-구조를-살펴보자"><a href="#예제-프로젝트의-구조를-살펴보자" class="headerlink" title="예제 프로젝트의 구조를 살펴보자"></a>예제 프로젝트의 구조를 살펴보자</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line">#### Spring Boot Gradle Plugin</span><br><span class="line"></span><br><span class="line">```groovy</span><br><span class="line">buildscript &#123;</span><br><span class="line">	repositories &#123;</span><br><span class="line">		maven &#123; url &apos;https://repo.spring.io/libs-snapshot&apos; &#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	dependencies &#123;</span><br><span class="line">		classpath files(pluginClasspath.split(&apos;,&apos;))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">apply plugin: &apos;org.springframework.boot&apos;</span><br><span class="line"></span><br><span class="line">springBoot &#123;</span><br><span class="line">    mainClass = &apos;com.stunstun.examples.ApiBootApplication&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile(<span class="string">"org.springframework.boot:spring-boot-starter-web"</span>)</span><br><span class="line">    providedRuntime(<span class="string">"org.springframework.boot:spring-boot-starter-tomcat"</span>)</span><br><span class="line">    testCompile(<span class="string">"junit:junit"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Build-Scope"><a href="#Build-Scope" class="headerlink" title="Build Scope"></a>Build Scope</h4><p><code>compile</code></p>
+<p><code>testCompile</code></p>
+<p><code>providedRuntime</code></p>
+<h4 id="지금-당장-필요한-Gradle-Tasks"><a href="#지금-당장-필요한-Gradle-Tasks" class="headerlink" title="지금 당장 필요한 Gradle Tasks"></a>지금 당장 필요한 Gradle Tasks</h4><h4 id="사용자-Gradle-Task-정의하기"><a href="#사용자-Gradle-Task-정의하기" class="headerlink" title="사용자 Gradle Task 정의하기"></a>사용자 Gradle Task 정의하기</h4><p>다음 글에서는 지금까지 완성한 Gradle 프로젝트를 Github의 Git Repository에 연동하여 Spring Boot 애플리케이션을 통해 맘껏 뛰어놀 수 있는 놀이터를 만들어보자.</p>
+<p><br></p>
+<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><ul>
+<li><a href="https://gradle.org/" target="_blank" rel="external">https://gradle.org/</a></li>
+<li><a href="http://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/gradle-plugin//reference/html/" target="_blank" rel="external">http://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/gradle-plugin//reference/html/</a></li>
+<li><a href="https://github.com/Netflix/gradle-template" target="_blank" rel="external">https://github.com/Netflix/gradle-template</a></li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a class="prev" href="/2015/05/10/spring-boot-environment/"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="next" href="/2015/05/29/spring-boot-and-loaded/"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></div><ins class="adsbygoogle adsense-bottom" style="display:block;" data-ad-client="ca-pub-6188640546219653" data-ad-slot="6129396565" data-ad-format="auto"></ins><div class="fb-comments-area"><div class="fb-comments" data-href="https://www.holaxprogramming.com/2015/05/12/spring-boot-and-gradle/" data-width="700" data-numposts="5"></div></div><div class="copyright"><p>© 2012 - 2022 <a href="https://github.com/stunstunstun" target="_blank">Minhyeok Jung</a>. Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/stunstunstun/hexo-theme-chiangmai" target="_blank">hexo-theme-chiangmai</a>.</p></div></footer></div><script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({});</script><script>window.fbAsyncInit=function(){FB.init({appId:"1258629384258634",cookie:!0,xfbml:!0,version:"v2.8"}),FB.AppEvents.logPageView()},function(e,n,t){var o,c=e.getElementsByTagName(n)[0];e.getElementById(t)||((o=e.createElement(n)).id=t,o.src="//connect.facebook.net/en_US/sdk.js",c.parentNode.insertBefore(o,c))}(document,"script","facebook-jssdk");</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create','UA-97419941-1','auto');ga('send','pageview');</script></body></html>

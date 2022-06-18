@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="ko" prefix="og: http://ogp.me/ns#"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>API Gateway 패턴 · 안녕 프로그래밍</title><meta name="description" content="안녕 프로그래밍"><meta name="og:title" content="API Gateway 패턴"><meta name="og:type" content="website"><meta name="og:url" content="https://www.holaxprogramming.com/2015/08/24/devops-api-gateway/"><meta name="og:image" content="http://image.toast.com/aaaaahq/hola_cover.JPG"><meta name="og:description" content="안녕 프로그래밍"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/chiangmai.css"><meta name="steem:author" content="@stunstunstun"><meta name="fb:app_id" content="1258629384258634"><link rel="search" type="application/opensearchdescription+xml" href="https://www.holaxprogramming.com/atom.xml" title="안녕 프로그래밍"></head><body class="post"><div id="fb-root"></div><div class="wrap"><header><nav class="navi-post"><a class="navi-post-back" href="javascript:history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="navi-post-home" href="/"><i class="fa fa-home" aria-hidden="true"></i></a></nav></header><main class="post"><div class="post"><article class="post-block"><h1 class="post-title">API Gateway 패턴</h1><div class="post-info"><div class="post-info-profile"><a href="https://github.com/stunstunstun" target="_blank"><img src="/image/profile.jpg"></a></div><div class="post-info-details"><div class="post-categories"><a href="/categories/devops" target="_self"><span>DEVOPS</span></a></div><div class="post-date">2015년 8월 24일</div></div></div><div class="post-share"><div class="fb-like" data-href="https://www.holaxprogramming.com/2015/08/24/devops-api-gateway/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false">                 </div><div class="fb-share-button" data-href="https://www.holaxprogramming.com/2015/08/24/devops-api-gateway/" data-layout="button" data-size="small" data-mobile-iframe="true"></div><div class="fb-follow" data-href="https://www.facebook.com/holaxprogramming/" data-layout="button_count" data-size="small" data-show-faces="true"></div></div><div class="post-content"><p>이 문서는 API Gateway 패턴에 대해 키워드 위주로 요약하였다.</p>
+<h2 id="Monolithic-Architecture-와-Micro-Service-Architecture"><a href="#Monolithic-Architecture-와-Micro-Service-Architecture" class="headerlink" title="Monolithic Architecture 와 Micro Service Architecture"></a>Monolithic Architecture 와 Micro Service Architecture</h2><p>API Gateway Design이 왜필요한지를 이해하려면 Monolithic Architecture 와 Micro Service Architecture에 대한 이해가 먼저 필요하다. 아래의 조대협씨의 블로그에 매우 잘정리해가 되어있으니, 참고하면 좋을듯 하다.</p>
+<ul>
+<li><a href="http://bcho.tistory.com/948" target="_blank" rel="external">http://bcho.tistory.com/948</a></li>
+</ul>
+<h4 id="Monolithic-Architecture"><a href="#Monolithic-Architecture" class="headerlink" title="Monolithic Architecture"></a>Monolithic Architecture</h4><p>하나의 애플리케이션에 모든 기능이 구현되어 있는 아키텍쳐</p>
+<h4 id="Micro-Service-Architecture"><a href="#Micro-Service-Architecture" class="headerlink" title="Micro Service Architecture"></a>Micro Service Architecture</h4><p>하나의 애플리케이션을 구성하기 위한 기능을 여러 컴포넌트/서비스로 분리한 구조이다.<br>컴포넌트/서비스 단위로 데이터가 분리되고 빌드 또는 Deploy시에도 서로 영향이 없어야 한다.</p>
+<h2 id="API-Gateway"><a href="#API-Gateway" class="headerlink" title="API Gateway?"></a>API Gateway?</h2><p>Micro Service Architecture 가 탄생하면서 이를 보다 효율적으로 이용하기 위해 나타난 Design이다.<br>하나의 애플리케이션에서 여러 분산된 서비스를 이용하다보니 다양한 문제들이 발생되는데 이를 해결하기 위해 API Gateway가 탄생되었다.</p>
+<p>Micro Service Architecture 에서 이슈되는 문제와 API Gateway를 통해 이를 어떻게 해결해나가는지 살펴보도록 하자.</p>
+<h2 id="API-Gateway의-공통기능"><a href="#API-Gateway의-공통기능" class="headerlink" title="API Gateway의 공통기능"></a>API Gateway의 공통기능</h2><p><img src="http://photo.toast.com/aaaacd/Dongle/api_gateway_common.png"></p>
+<h4 id="Authentication-Authorization"><a href="#Authentication-Authorization" class="headerlink" title="Authentication / Authorization"></a>Authentication / Authorization</h4><ul>
+<li><del>OAuth2.0 : accessToken / refreshToken</del></li>
+<li>One Time Token</li>
+<li>JSON Web Token : <a href="http://jwt.io/" target="_blank" rel="external">http://jwt.io/</a></li>
+<li>Spring Security</li>
+</ul>
+<h4 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a>Logging</h4><ul>
+<li>API Request Logging / Audit</li>
+<li>Metering / Charge</li>
+<li>QoS (Limit)</li>
+</ul>
+<h4 id="Orchestration-Mash-Up"><a href="#Orchestration-Mash-Up" class="headerlink" title="Orchestration(Mash-Up)"></a>Orchestration(Mash-Up)</h4><ul>
+<li>여러개의 API를 하나로 묶어 Mash-Up에 구성할수 있는 기능</li>
+</ul>
+<h4 id="And-so-on…"><a href="#And-so-on…" class="headerlink" title="And so on…"></a>And so on…</h4><ul>
+<li>Message Transformation</li>
+<li>Message Format (Protocol) Transformation</li>
+</ul>
+<h4 id="API-Gateway로-얻을수-있는것"><a href="#API-Gateway로-얻을수-있는것" class="headerlink" title="API Gateway로 얻을수 있는것"></a>API Gateway로 얻을수 있는것</h4><p><code>클라이언트 이슈</code></p>
+<ul>
+<li>각 클라이언트에 최적화된 API를 제공할 수 있다.</li>
+<li>여러 서비스를 호출하는 로직을 클라이언트에서 API 게이트웨이로 옮겨 클라이언트를 간소화할 수 있다.</li>
+<li>요청, 라운드 트립(round-trip)의 수를 줄일 수 있다. 예를 들어, API 게이트웨이는 클라이언트가 한 번의 라운드 트립으로 여러 서비스에서 데이터를 받아올 수 있다. 더 적은 요청은 부하를 줄이고 사용자 경험을 높힐 수 있다는 의미다. API 게이트웨이는 모바일 애플리케이션에서는 필수다.</li>
+</ul>
+<p><code>벡엔드</code></p>
+<ul>
+<li>분산시스템. 집중적으로 트래픽이 몰리는 서비스만 스케일 아웃 할 수 있다.</li>
+<li>독립적으로 서비스별로 유연하게 배포가 가능하다.</li>
+<li>특정 서비스의 배포로 인한 다른 서비스에 대한 영향도가 줄어든다.</li>
+<li>컴포넌트 확장에도 유연</li>
+<li>조직이 일하는 프로세스나 규칙에도 영향을 미칠 수 있다.</li>
+</ul>
+<h4 id="주의해야할점"><a href="#주의해야할점" class="headerlink" title="주의해야할점"></a>주의해야할점</h4><ul>
+<li>추가적인 API 콜로 인한 네트워크 성능 이슈</li>
+<li>서비스간 트랜잭션 처리</li>
+<li>테스팅의 복잡도</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><blockquote>
+<p><a href="http://microservices.io/patterns/apigateway.html" target="_blank" rel="external">http://microservices.io/patterns/apigateway.html</a><br><a href="http://techblog.netflix.com/2012/07/embracing-differences-inside-netflix.html" target="_blank" rel="external">http://techblog.netflix.com/2012/07/embracing-differences-inside-netflix.html</a><br><a href="http://devcafe.nhncorp.com/index.php?mid=intro&amp;act=dispWikiContent&amp;vid=APIgateway" target="_blank" rel="external">http://devcafe.nhncorp.com/index.php?mid=intro&amp;act=dispWikiContent&amp;vid=APIgateway</a><br><a href="http://wiki-camp.appspot.com/%5B%EB%B2%88%EC%97%AD%5D_%ED%8C%A8%ED%84%B4%3A_API_Gateway" target="_blank" rel="external">http://wiki-camp.appspot.com/%5B%EB%B2%88%EC%97%AD%5D_%ED%8C%A8%ED%84%B4%3A_API_Gateway</a><br><a href="http://bcho.tistory.com/948" target="_blank" rel="external">http://bcho.tistory.com/948</a><br><a href="http://bcho.tistory.com/1005" target="_blank" rel="external">http://bcho.tistory.com/1005</a><br><a href="http://bcho.tistory.com/999" target="_blank" rel="external">http://bcho.tistory.com/999</a><br><a href="https://www.polarisoffice.com/d/2RP8vZUY" target="_blank" rel="external">https://www.polarisoffice.com/d/2RP8vZUY</a></p>
+</blockquote>
+</div></article></div></main><footer><div class="paginator"><a class="prev" href="/2015/07/29/android-deploy-to-jcenter/"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="next" href="/2015/09/11/devops-api-gateway-authentication/"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></div><ins class="adsbygoogle adsense-bottom" style="display:block;" data-ad-client="ca-pub-6188640546219653" data-ad-slot="6129396565" data-ad-format="auto"></ins><div class="fb-comments-area"><div class="fb-comments" data-href="https://www.holaxprogramming.com/2015/08/24/devops-api-gateway/" data-width="700" data-numposts="5"></div></div><div class="copyright"><p>© 2012 - 2022 <a href="https://github.com/stunstunstun" target="_blank">Minhyeok Jung</a>. Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/stunstunstun/hexo-theme-chiangmai" target="_blank">hexo-theme-chiangmai</a>.</p></div></footer></div><script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({});</script><script>window.fbAsyncInit=function(){FB.init({appId:"1258629384258634",cookie:!0,xfbml:!0,version:"v2.8"}),FB.AppEvents.logPageView()},function(e,n,t){var o,c=e.getElementsByTagName(n)[0];e.getElementById(t)||((o=e.createElement(n)).id=t,o.src="//connect.facebook.net/en_US/sdk.js",c.parentNode.insertBefore(o,c))}(document,"script","facebook-jssdk");</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create','UA-97419941-1','auto');ga('send','pageview');</script></body></html>

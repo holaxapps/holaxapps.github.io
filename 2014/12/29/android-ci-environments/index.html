@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="ko" prefix="og: http://ogp.me/ns#"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>Android CI 환경 구축하기 · 안녕 프로그래밍</title><meta name="description" content="Linux환경에서 Android 프로젝트 빌드하기"><meta name="og:title" content="Android CI 환경 구축하기"><meta name="og:type" content="website"><meta name="og:url" content="https://www.holaxprogramming.com/2014/12/29/android-ci-environments/"><meta name="og:image" content="https://bluefletch.com/wp-content/uploads/2015/03/header_image.jpg"><meta name="og:image:secure_url" content="https://bluefletch.com/wp-content/uploads/2015/03/header_image.jpg"><meta name="og:description" content="Linux환경에서 Android 프로젝트 빌드하기"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/chiangmai.css"><meta name="steem:author" content="@stunstunstun"><meta name="fb:app_id" content="1258629384258634"><link rel="search" type="application/opensearchdescription+xml" href="https://www.holaxprogramming.com/atom.xml" title="안녕 프로그래밍"></head><body class="post"><div id="fb-root"></div><div class="wrap"><header><nav class="navi-post"><a class="navi-post-back" href="javascript:history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="navi-post-home" href="/"><i class="fa fa-home" aria-hidden="true"></i></a></nav></header><main class="post"><div class="post"><article class="post-block"><h1 class="post-title">Android CI 환경 구축하기</h1><div class="post-info"><div class="post-info-profile"><a href="https://github.com/stunstunstun" target="_blank"><img src="/image/profile.jpg"></a></div><div class="post-info-details"><div class="post-categories"><a href="/categories/android" target="_self"><span>ANDROID</span></a></div><div class="post-date">2014년 12월 29일</div></div></div><div class="post-share"><div class="fb-like" data-href="https://www.holaxprogramming.com/2014/12/29/android-ci-environments/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false">                 </div><div class="fb-share-button" data-href="https://www.holaxprogramming.com/2014/12/29/android-ci-environments/" data-layout="button" data-size="small" data-mobile-iframe="true"></div><div class="fb-follow" data-href="https://www.facebook.com/holaxprogramming/" data-layout="button_count" data-size="small" data-show-faces="true"></div></div><div class="post-content"><p>이 글에서는 로컬PC의 IDE에서 벗어나 독립적으로 Linux와 같은 운영체제에서 Jenkins를 통해 Android 프로젝트를 빌드하는 과정을 살펴볼 예정이다.</p>
+<a id="more"></a>
+<p><img src="https://bluefletch.com/wp-content/uploads/2015/03/header_image.jpg" width="500"></p>
+<blockquote>
+<p>빌드 환경 구성을 위한 시스템 환경은 아래와 같다.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>구성 요소</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS</td>
+<td>CentOS 5.7 64bit</td>
+</tr>
+<tr>
+<td>Android SDK</td>
+<td>Build Tools 19.1.0</td>
+</tr>
+<tr>
+<td>Build Tools</td>
+<td>Jenkins, Gradle 2.1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="IDE-독립적인-빌드-환경은-왜-필요할까"><a href="#IDE-독립적인-빌드-환경은-왜-필요할까" class="headerlink" title="IDE 독립적인 빌드 환경은 왜 필요할까?"></a>IDE 독립적인 빌드 환경은 왜 필요할까?</h2><p>별도의 빌드 머신이나 AWS의 EC2 인스턴스에서 쉽게 빌드 환경을 구성 할 수가 있는데, 애플리케이션을 개발자의 IDE 뿐만 아니라 독립적인 환경에서 빌드 할 수 있어야 하는 이유는 다음과 같다.</p>
+<p><img src="http://image.toast.com/aaaaahq/android-ci-environments.png"></p>
+<ol>
+<li><p>Subversion 또는 Git 저장소의 Version을 기준으로 애플리케이션을 빌드해야만 한다. 개발자의 PC를 기준으로 빌드하고 이를 배포하게 되면 Version관리를 하지 않는 것과 다름없다. 이 포스팅에서는 Version 관리에 대한 필요성을 굳이 언급하지 않겠다.</p>
+</li>
+<li><p>개발자가 IDE에서 수동으로 빌드하고 배포하는 과정에서 발생하는 실수가 서비스에 그대로 영향을 미치게 된다.</p>
+</li>
+<li><p>별도의 빌드 환경은 프로젝트 정보를 Clone하고 테스트, 빌드, 배포하는 모든 과정을 자동화 하기 위한 기반이 된다.</p>
+</li>
+</ol>
+<h2 id="빌드-환경-구성하기"><a href="#빌드-환경-구성하기" class="headerlink" title="빌드 환경 구성하기"></a>빌드 환경 구성하기</h2><p>먼저 Eclipse나 Android Studio와 같은 IDE 독립적으로 안드로이드 프로젝트를 빌드 하기 위해서는 빌드를 수행할 빌드 머신 또는 빌드 서버가 필요하다. 이 글에서는 운영체제가 CentOS인 환경을 시작으로 그 밖에 필요한 것들을 살펴보도록 하겠다.</p>
+<ul>
+<li>Android SDK 설치</li>
+<li>Jenkins에 Gradle 플러그인 설치</li>
+</ul>
+<h4 id="Android-SDK-설치-및-환경-설정"><a href="#Android-SDK-설치-및-환경-설정" class="headerlink" title="Android SDK 설치 및 환경 설정"></a>Android SDK 설치 및 환경 설정</h4><p>빌드를 수행할 운영체제에 Android SDK를 설치하는 일이 가장 먼저이다. Android Developer 페이지에서 CentOS와 같은 Linux 환경을 위한 Android SDK를 다운 받을 수 있다.</p>
+<blockquote>
+<p><a href="https://developer.android.com/studio/index.html#downloads" target="_blank" rel="external">https://developer.android.com/studio/index.html#downloads</a></p>
+</blockquote>
+<p>예시로 아래와 같이 Home 디렉토리에 android 폴더를 만들어 Download 하도록 하겠다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir android &amp;&amp; cd android</span><br><span class="line">$ wget https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip</span><br></pre></td></tr></table></figure>
+<p>Download 받은 아카이브를 해제한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tar -zxvf sdk-tools-linux-3859397.zip</span><br></pre></td></tr></table></figure>
+<p>설치한 Android SDK 경로를 운영체제의 환경 변수에 추가한다.</p>
+<p><strong>.bash_profile</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">export ANDROID_HOME=$HOME/android</span><br><span class="line">export PATH=$&#123;PATH&#125;:$ANDROID_HOME/tools</span><br></pre></td></tr></table></figure>
+<p>환경변수의 변경 내역을 운영체제에 반영 한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ source .bash_profile</span><br></pre></td></tr></table></figure>
+<p>정상적으로 반영되었는지 최종적으로 확인해 본다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ android</span><br></pre></td></tr></table></figure>
+<h4 id="Android-SDK에-대한-환경-설정"><a href="#Android-SDK에-대한-환경-설정" class="headerlink" title="Android SDK에 대한 환경 설정"></a>Android SDK에 대한 환경 설정</h4><p>Android 프로젝트를 빌드 하기 위해서는 Android SDK 설치 뿐만 아니라, 몇몇 하위 패키지에 대한 설치가 필요하다.</p>
+<p>아래의 명령을 통해 모든 Version의 Android 패키지를 업데이트 할 수도 있겠지만, 시간이 상당히 많이 걸리기 때문에, 필요한 패키지만 설치하는 것을 권장한다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> android update --no-ui</span><br></pre></td></tr></table></figure>
+<p>아래와 같이 필요한 패키지만을 선택해서 설치 할 수 있다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ android update sdk -u --filter platform-tools, android-19</span><br></pre></td></tr></table></figure>
+<p>설치 가능한 패키지는 아래와 같이 확인이 가능 한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ android list sdk --all</span><br><span class="line">$ android update sdk -u --all --filter &lt;number&gt;</span><br></pre></td></tr></table></figure>
+<div class="tip">만약, OS가 64bit라면, 아래와 같이 32bit 라이브러리의 설치가 필요 할수도 있다</div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install libstdc++.i686</span><br><span class="line">$ sudo yum install ncurses-libs.i686</span><br><span class="line">$ sudo yum install zlib.i686</span><br></pre></td></tr></table></figure>
+<h4 id="Jenkins에-Gradle-플러그인-설치"><a href="#Jenkins에-Gradle-플러그인-설치" class="headerlink" title="Jenkins에 Gradle 플러그인 설치"></a>Jenkins에 Gradle 플러그인 설치</h4><p>이 글에서는 Jenkins에 대한 구체적인 설명이나 설치 방법을 생략한다. Jenkins를 사용해 본 경험이 없다면 아래의 링크를 통해서 자신이 필요한 운영체제에 Jenkins를 설치 할 수 있다.</p>
+<blockquote>
+<p><a href="https://jenkins.io/" target="_blank" rel="external">https://jenkins.io/</a></p>
+</blockquote>
+<p>Jenkins의 운영 화면을 통해서 <code>관리</code>-<code>시스템 설정</code>메뉴에서 아래와 같이 설치한 Android SDK 와 Gradle에 대한 설정을 한다.</p>
+<h4 id="Android-SDK-경로-지정"><a href="#Android-SDK-경로-지정" class="headerlink" title="Android SDK 경로 지정"></a>Android SDK 경로 지정</h4><p>운영체제에 설치된 Android SDK의 Path를 지정한다</p>
+<h4 id="Gradle-설치"><a href="#Gradle-설치" class="headerlink" title="Gradle 설치"></a>Gradle 설치</h4><p>플러그인을 통해 Jenkins에서 사용할 Gradle을 설치할 수 있다. 하지만 빌드시에는 Gradle를 따로 설치할 필요가 없는 Gradle Wrapper로 빌드하는 것을 추천한다.</p>
+<h2 id="Gradle-플러그인-설정"><a href="#Gradle-플러그인-설정" class="headerlink" title="Gradle 플러그인 설정"></a>Gradle 플러그인 설정</h2><p>Jenkins에서 Android 프로젝트를 Gradle를 통해 빌드하기 위해 아래의 플러그인이 필요하다.</p>
+<ul>
+<li>Jenkins Gradle Plugin</li>
+<li>Environment Injector Plugin</li>
+</ul>
+<h4 id="Jenkins-Gradle-Plugin"><a href="#Jenkins-Gradle-Plugin" class="headerlink" title="Jenkins Gradle Plugin"></a>Jenkins Gradle Plugin</h4><p>Jenkins 플러그인 중 Jenkins Gradle Plugin을 설치하면, 빌드 서버에 별도의 Gradle을 설치할 필요가 없다.</p>
+<h4 id="Environment-Injector-Plugin"><a href="#Environment-Injector-Plugin" class="headerlink" title="Environment Injector Plugin"></a>Environment Injector Plugin</h4><p>Environment Injector Plugin은 빌드시에 필요한 운영체제의 환경 변수를 동적으로 inject 시키는 역할을 한다. 아래와 같이 Gradle에서 참조해야 할 환경 변수를 위해 <code>Inject environment variables to the build process &gt; Properties Content</code>에 Android SDK의 경로를 추가해 준다.</p>
+<h2 id="Android-Studio와-Gradle"><a href="#Android-Studio와-Gradle" class="headerlink" title="Android Studio와 Gradle"></a>Android Studio와 Gradle</h2><p>빌드 서버에서 Android 프로젝트를 빌드하기 위한 기본적인 구성이 마련되었다면, 애플리케이션 또는 라이브러리를 배포하기 위한 요구사항이나 빌드에 필요한 프로세스를 먼저 정의할 필요가 있다.</p>
+<p>예를 들면 이러한 과정을 말한다:</p>
+<ul>
+<li>IDE 이외의 환경에서의 빌드를 해야 한다</li>
+<li>빌드 프로세스에서 테스트 코드를 통해 애플리케이션의 테스트를 자동화한다</li>
+<li>테스트, 빌드하는 과정에서 Test Coverage 등 Quality Practice에 대한 Report를 생성하고 싶다</li>
+<li>다른 사용자에게 제공하는 라이브러리를 개발한다면 javadoc을 통해 API Reference 문서를 자동으로 생성하고 싶다</li>
+<li>빌드가 완료되면 라이브러리 또는 SDK 배포를 위한 패키징을 수행한다.</li>
+<li>애플리케이션의 APK를 다양한 조건의 환경으로 한번에 생성하고 싶다 (개발, 운영서버를 구분한 APK를 각각 생성)</li>
+</ul>
+<p>IDE 독립적으로 빌드할 수 있는 환경이 갖추어지면 위와 같은 요구사항을 자동화할 수가 있는데, 직접 구현할 수도 있겠지만 이는 상당한 노력이 필요할 것이다. 현재 Android에서는 Gradle이 기본적으로 탑재된 Android Studio를 개발 도구로 채택했으며, Gradle에서 제공하는 다양한 플러그인과 Task를 통해서 위와 같은 요구사항에 쉽게 대처할 수가 있다. Gradle에 대한 사용법은 너무나 방대해 생략한다. Android Studio와 Gradle를 이용한 자세한 사항은 아래의 링크를 통해 확인할수 있다.</p>
+<blockquote>
+<p><a href="https://developer.android.com/studio/intro/index.html" target="_blank" rel="external">https://developer.android.com/studio/intro/index.html</a><br><a href="https://gradle.org/" target="_blank" rel="external">https://gradle.org/</a></p>
+</blockquote>
+<h2 id="Jenkins를-통해-지속적인-통합하기"><a href="#Jenkins를-통해-지속적인-통합하기" class="headerlink" title="Jenkins를 통해 지속적인 통합하기"></a>Jenkins를 통해 지속적인 통합하기</h2><p>마지막으로 Jenkins의 다양한 플러그인과 Gradle을 통해 프로젝트를 지속적으로 통합하기 위한 전략을 살펴보겠다.</p>
+<blockquote>
+<p>지속적으로 통합하기<br>빌드와 배포 과정을 자동화하는 것 뿐만 아니라 지속적으로 프로젝트의 품질을 자동으로 평가하는 것을 말한다.</p>
+</blockquote>
+<h4 id="jacoco를-통한-테스트-Coverage-측정"><a href="#jacoco를-통한-테스트-Coverage-측정" class="headerlink" title="jacoco를 통한 테스트 Coverage 측정"></a>jacoco를 통한 테스트 Coverage 측정</h4><p>코드 품질을 평가하는 EclEmma 프로젝트가 deprecated 되고 그 멤버들이 새로운 프로젝트를 진행하였는데 이것이 바로 jacoco 프로젝트이다. 기존의 EclEmma는 최근에 업데이트 이력이 없으며, 문서화가 잘 되어있지 않다. Java Version에 따른 호환성 이슈도 있으니 jacoco를 통해 테스트 Coverage를 측정하는 것을 추천한다.</p>
+<blockquote>
+<p><a href="http://www.eclemma.org/jacoco/index.html" target="_blank" rel="external">http://www.eclemma.org/jacoco/index.html</a></p>
+</blockquote>
+<p>jacoco는 Java 프로젝트 전반의 테스트 Coverage를 체크를 위한 라이브러리이기 때문에, Android 테스트 코드의 품질을 report하기 위한 좋은 선택이 될것이다.</p>
+<p>Gradle 스크립트에서 아래와 같이 jacoco task를 추가한다.</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">'jacoco'</span></span><br><span class="line"></span><br><span class="line">task jacocoTestReport(<span class="string">type:</span> JacocoReport, <span class="string">dependsOn:</span> <span class="string">"testDebug"</span>) &#123;</span><br><span class="line">    group = <span class="string">"Reporting"</span></span><br><span class="line">    description = <span class="string">"Generate Jacoco coverage reports after running tests."</span></span><br><span class="line">    reports &#123;</span><br><span class="line">        xml.enabled = <span class="literal">true</span> <span class="comment">// coveralls plugin depends on xml format report</span></span><br><span class="line">        html.enabled = <span class="literal">true</span></span><br><span class="line">    &#125;    </span><br><span class="line">    classDirectories = fileTree(</span><br><span class="line"><span class="symbol">            dir:</span> <span class="string">'build/intermediates/classes/debug'</span>,</span><br><span class="line"><span class="symbol">            excludes:</span> [<span class="string">'com/toast/android/mobill/core/BuildConfig.class'</span>                     </span><br><span class="line">            ])</span><br><span class="line">    sourceDirectories = files(coverageSourceDirs)</span><br><span class="line">    executionData = files(<span class="string">'build/jacoco/testDebug.exec'</span>)</span><br><span class="line"></span><br><span class="line">    afterEvaluate &#123;</span><br><span class="line">        <span class="comment">// just clean up coveralls dashboard, following reports are not of interest</span></span><br><span class="line">        testDebug.reports.junitXml.enabled = <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Jenkins에 jacoco 플러그인을 설치한 뒤 Gradle Task를 통해 빌드가 완료되면, 플러그인을 통해 테스트 Coverage 리포트를 확인할 수 있다.</p>
+<h4 id="마치며"><a href="#마치며" class="headerlink" title="마치며"></a>마치며</h4><p>지금까지 IDE를 벗어나서 Android 프로젝트를 빌드하고 지속적인 통합을 위한 환경을 구성해 보았다. 이 문서를 시작으로 빌드 환경에 대한 필요성을 인식하고 활용 할 수 있는 환경을 갖추고 앞으로 Gradle에 대한 이해를 높혀 나간다면 빌드 프로세스에서 발생하는 다양한 요구사항을 효율적으로 해결 할 수 있을 것이라고 본다.</p>
+</div></article></div></main><footer><div class="paginator"><a class="prev" href="/2014/12/29/android-testing/"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="next" href="/2015/01/01/devops-api-design/"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></div><ins class="adsbygoogle adsense-bottom" style="display:block;" data-ad-client="ca-pub-6188640546219653" data-ad-slot="6129396565" data-ad-format="auto"></ins><div class="fb-comments-area"><div class="fb-comments" data-href="https://www.holaxprogramming.com/2014/12/29/android-ci-environments/" data-width="700" data-numposts="5"></div></div><div class="copyright"><p>© 2012 - 2022 <a href="https://github.com/stunstunstun" target="_blank">Minhyeok Jung</a>. Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/stunstunstun/hexo-theme-chiangmai" target="_blank">hexo-theme-chiangmai</a>.</p></div></footer></div><script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({});</script><script>window.fbAsyncInit=function(){FB.init({appId:"1258629384258634",cookie:!0,xfbml:!0,version:"v2.8"}),FB.AppEvents.logPageView()},function(e,n,t){var o,c=e.getElementsByTagName(n)[0];e.getElementById(t)||((o=e.createElement(n)).id=t,o.src="//connect.facebook.net/en_US/sdk.js",c.parentNode.insertBefore(o,c))}(document,"script","facebook-jssdk");</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create','UA-97419941-1','auto');ga('send','pageview');</script></body></html>

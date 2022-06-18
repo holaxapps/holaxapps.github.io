@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="ko" prefix="og: http://ogp.me/ns#"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>Github Pages에 Custom Domain 적용하기 · 안녕 프로그래밍</title><meta name="description" content="Github Pages 더 활용하기"><meta name="og:title" content="Github Pages에 Custom Domain 적용하기"><meta name="og:type" content="website"><meta name="og:url" content="https://www.holaxprogramming.com/2017/05/15/github-page-and-custom-domain/"><meta name="og:image" content="https://cdn.dribbble.com/users/14268/screenshots/949452/photo-x2.png"><meta name="og:image:secure_url" content="https://cdn.dribbble.com/users/14268/screenshots/949452/photo-x2.png"><meta name="og:description" content="Github Pages 더 활용하기"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/chiangmai.css"><meta name="steem:author" content="@stunstunstun"><meta name="fb:app_id" content="1258629384258634"><link rel="search" type="application/opensearchdescription+xml" href="https://www.holaxprogramming.com/atom.xml" title="안녕 프로그래밍"></head><body class="post"><div id="fb-root"></div><div class="wrap"><header><nav class="navi-post"><a class="navi-post-back" href="javascript:history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="navi-post-home" href="/"><i class="fa fa-home" aria-hidden="true"></i></a></nav></header><main class="post"><div class="post"><article class="post-block"><h1 class="post-title">Github Pages에 Custom Domain 적용하기</h1><div class="post-info"><div class="post-info-profile"><a href="https://github.com/stunstunstun" target="_blank"><img src="/image/profile.jpg"></a></div><div class="post-info-details"><div class="post-categories"><a href="/categories/git" target="_self"><span>GIT</span></a></div><div class="post-date">2017년 5월 15일</div></div></div><div class="post-share"><div class="fb-like" data-href="https://www.holaxprogramming.com/2017/05/15/github-page-and-custom-domain/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false">                 </div><div class="fb-share-button" data-href="https://www.holaxprogramming.com/2017/05/15/github-page-and-custom-domain/" data-layout="button" data-size="small" data-mobile-iframe="true"></div><div class="fb-follow" data-href="https://www.facebook.com/holaxprogramming/" data-layout="button_count" data-size="small" data-show-faces="true"></div></div><div class="post-content"><p><img src="https://cdn.dribbble.com/users/14268/screenshots/949452/photo-x2.png" width="500"></p>
+<p>이 포스팅은 <a href="http://holaxprogramming.com/2017/04/16/github-page-and-hexo/" target="_blank" rel="external"><code>Github Pages와 Hexo를 통해 30분만에 기술 블로그 만들기</code></a> 후에 Github Pages에 새로운 Domain을 적용하는 과정을 담고 있습니다. Github Pages를 통해 블로그를 만들고 싶다면 먼저 위의 글을 참고해주세요. 자 그럼 시작해 볼까요, 기본적으로 Github Pages를 통해 정적 페이지(Static Page)를 호스팅(Hosting)하는 경우에는 아래와 같은 도메인(Domain)을 제공 받게 됩니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USERNAME.github.io</span><br></pre></td></tr></table></figure>
+<p>그렇다면 직접 DNS을 구입해 Github Pages에 적용 할 수는 없을까요? Github에서는 Custom DNS를 통해서 새로운 Domain을 Github Pages에 적용 할 수 있도록 하고 있습니다. 지금 보시는 블로그 역시 같은 방법으로 github.io 에서 Custom Domain으로 변경하여 운영하고 있습니다.</p>
+<h2 id="Github-Pages-설정"><a href="#Github-Pages-설정" class="headerlink" title="Github Pages 설정"></a>Github Pages 설정</h2><p>Github Pages의 Repository 메뉴의 <code>Settings &gt; Options &gt; Github Pages</code> 로 이동:</p>
+<p><img src="http://image.toast.com/aaaaahq/git-page-ssl.png"></p>
+<p>Github Pages 메뉴의 Custom domain을 자신이 소유하고 있는 Domain 주소로 변경하면, Repository의 Root 디렉토리에 아래와 같이 <a href="https://en.wikipedia.org/wiki/CNAME_record" target="_blank" rel="external"><code>CNAME</code></a> 파일이 생성 됩니다. 이후에는 USERNAME.github.io 접근되는 요청은 변경된 Domain으로 Redirect 됩니다.</p>
+<p><strong>CNAME</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www.holaxprogramming.com</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>참고<br><a href="https://github.com/holaxapps/holaxapps.github.io/blob/master/CNAME" target="_blank" rel="external">https://github.com/holaxapps/holaxapps.github.io/blob/master/CNAME</a></p>
+</blockquote>
+<h2 id="DNS-설정"><a href="#DNS-설정" class="headerlink" title="DNS 설정"></a>DNS 설정</h2><p>그 다음으로는 Domain을 구입하신 서비스에서 DNS에 대한 Host Records 설정을 해야 합니다. 안녕 프로그래밍의 DNS은 Namecheap이라는 서비스를 통해 운영되고 있습니다</p>
+<h4 id="Host-Record-설정"><a href="#Host-Record-설정" class="headerlink" title="Host Record 설정"></a>Host Record 설정</h4><p>Github에서는 Github Pages에서 Custom Domain을 사용할 경우에 DNS 설정을 아래와 같이 반영할 것을 요구하고 있습니다. Advanced DNS Guide: If your custom domain name is <code>example.com</code> you need to modify the Host records information as shown below.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Host</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A Record</td>
+<td>@</td>
+<td>192.30.252.153</td>
+</tr>
+<tr>
+<td>A Record</td>
+<td>@</td>
+<td>192.30.252.154</td>
+</tr>
+<tr>
+<td>CName Record</td>
+<td>www</td>
+<td>USERNAME.github.io</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>A Record는 Domain을 물리적인 IP 주소로 연결 할 수 있도록 합니다. 192.30.252.153, 192.30.252.154는 Github Page의 Static Page를 관리하는 IP입니다.<br>CName은 물리적인 IP 주소가 아닌 다른 Domain을 연결 합니다. 대상 Domain의 IP의 변경 내역을 알 필요가 없습니다.</p>
+</blockquote>
+<div class="tip"><br>혹시 Github Pages와 Hexo를 통해 블로그를 만들었는데 위의 모든 과정을 진행 하였음에도 불구하고 CNAME 파일이 원하는대로 생성되지 않았나요?<br></div>
+
+<h4 id="그렇다면-Hexo에서-CNAME-플러그인을-설정할-필요가-있어요"><a href="#그렇다면-Hexo에서-CNAME-플러그인을-설정할-필요가-있어요" class="headerlink" title="그렇다면 Hexo에서 CNAME 플러그인을 설정할 필요가 있어요"></a>그렇다면 Hexo에서 CNAME 플러그인을 설정할 필요가 있어요</h4><p>CNAME 생성을 위한 패키지를 아래와 같이 설치하세요</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-cname --save</span><br></pre></td></tr></table></figure>
+<p>그리고 <code>_config.yml</code> 파일에서 아래와 같이 플러그인 설정을 해주시면 됩니다.</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">plugins:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo-generator-cname</span></span><br></pre></td></tr></table></figure>
+<p><code>_config.yml</code> 에서 url 이름도 적용한 Domain과 일치하는지 확인해 보세요.</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">url:</span> <span class="attr">https://www.holaxprogramming.com</span></span><br></pre></td></tr></table></figure>
+<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
+<li><a href="https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/" target="_blank" rel="external">https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/</a></li>
+<li><a href="https://developer.ubuntu.com/en/blog/2016/02/17/how-host-your-static-site-https-github-pages-and-cloudflare/" target="_blank" rel="external">https://developer.ubuntu.com/en/blog/2016/02/17/how-host-your-static-site-https-github-pages-and-cloudflare/</a></li>
+<li><a href="https://support.dnsimple.com/articles/differences-a-cname-records/" target="_blank" rel="external">https://support.dnsimple.com/articles/differences-a-cname-records/</a></li>
+<li><a href="https://www.namecheap.com/support/knowledgebase/article.aspx/579/2237/which-record-type-option-should-i-choose-for-the-information-im-about-to-enter" target="_blank" rel="external">https://www.namecheap.com/support/knowledgebase/article.aspx/579/2237/which-record-type-option-should-i-choose-for-the-information-im-about-to-enter</a></li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a class="prev" href="/2017/04/16/github-page-and-hexo/"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="next" href="/2017/06/12/encryption-with-rsa/"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></div><ins class="adsbygoogle adsense-bottom" style="display:block;" data-ad-client="ca-pub-6188640546219653" data-ad-slot="6129396565" data-ad-format="auto"></ins><div class="fb-comments-area"><div class="fb-comments" data-href="https://www.holaxprogramming.com/2017/05/15/github-page-and-custom-domain/" data-width="700" data-numposts="5"></div></div><div class="copyright"><p>© 2012 - 2022 <a href="https://github.com/stunstunstun" target="_blank">Minhyeok Jung</a>. Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/stunstunstun/hexo-theme-chiangmai" target="_blank">hexo-theme-chiangmai</a>.</p></div></footer></div><script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({});</script><script>window.fbAsyncInit=function(){FB.init({appId:"1258629384258634",cookie:!0,xfbml:!0,version:"v2.8"}),FB.AppEvents.logPageView()},function(e,n,t){var o,c=e.getElementsByTagName(n)[0];e.getElementById(t)||((o=e.createElement(n)).id=t,o.src="//connect.facebook.net/en_US/sdk.js",c.parentNode.insertBefore(o,c))}(document,"script","facebook-jssdk");</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create','UA-97419941-1','auto');ga('send','pageview');</script></body></html>

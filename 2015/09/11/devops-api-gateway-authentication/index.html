@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="ko" prefix="og: http://ogp.me/ns#"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>API Gateway 의 인증 및 API 요청에 대한 검증 · 안녕 프로그래밍</title><meta name="description" content="안녕 프로그래밍"><meta name="og:title" content="API Gateway 의 인증 및 API 요청에 대한 검증"><meta name="og:type" content="website"><meta name="og:url" content="https://www.holaxprogramming.com/2015/09/11/devops-api-gateway-authentication/"><meta name="og:image" content="http://image.toast.com/aaaaahq/hola_cover.JPG"><meta name="og:description" content="안녕 프로그래밍"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/chiangmai.css"><meta name="steem:author" content="@stunstunstun"><meta name="fb:app_id" content="1258629384258634"><link rel="search" type="application/opensearchdescription+xml" href="https://www.holaxprogramming.com/atom.xml" title="안녕 프로그래밍"></head><body class="post"><div id="fb-root"></div><div class="wrap"><header><nav class="navi-post"><a class="navi-post-back" href="javascript:history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="navi-post-home" href="/"><i class="fa fa-home" aria-hidden="true"></i></a></nav></header><main class="post"><div class="post"><article class="post-block"><h1 class="post-title">API Gateway 의 인증 및 API 요청에 대한 검증</h1><div class="post-info"><div class="post-info-profile"><a href="https://github.com/stunstunstun" target="_blank"><img src="/image/profile.jpg"></a></div><div class="post-info-details"><div class="post-categories"><a href="/categories/devops" target="_self"><span>DEVOPS</span></a></div><div class="post-date">2015년 9월 11일</div></div></div><div class="post-share"><div class="fb-like" data-href="https://www.holaxprogramming.com/2015/09/11/devops-api-gateway-authentication/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false">                 </div><div class="fb-share-button" data-href="https://www.holaxprogramming.com/2015/09/11/devops-api-gateway-authentication/" data-layout="button" data-size="small" data-mobile-iframe="true"></div><div class="fb-follow" data-href="https://www.facebook.com/holaxprogramming/" data-layout="button_count" data-size="small" data-show-faces="true"></div></div><div class="post-content"><p>현재 진행하고 있는 프로젝트에서는 클라이언트(단말기)가 요청하는 다양한 PG수단에 대한 인증 및 승인 요청에 대하여 일관적인 API를 제공하여야 한다. API 요청에 대한 인증 및 검증 그리고 로그 정보를 관리할 필요가 있어 앞단에 API Gateway를 아키텍쳐를 구상하였다.</p>
+<p>먼저 API Gateway에서 안정적인 보안을 위해서 HTTP 프로토콜에서의 다양한 인증 방식을 리뷰해 보았다.</p>
+<h4 id="HTTP-Authentication"><a href="#HTTP-Authentication" class="headerlink" title="HTTP Authentication"></a>HTTP Authentication</h4><p>일반적인 웹 페이지에서 많이 사용되며 매 요청마다 인증 정보를 HTTP Header에 첨부하는 방법이다.</p>
+<ul>
+<li>사용자의 아이디와 패스워드를 직접 첨부</li>
+<li>RFC2045-MIME variant of Base64 방식으로 Encoding한다</li>
+</ul>
+<p><code>HTTP Header</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</span><br></pre></td></tr></table></figure></p>
+<h4 id="SSL"><a href="#SSL" class="headerlink" title="SSL"></a>SSL</h4><p>단방향 HTTPS 프로토콜 제공. 서버에서 SSL 인증서를 설치하고 HTTPS 프로토콜을 제공한다.</p>
+<h4 id="OAuth-2-0"><a href="#OAuth-2-0" class="headerlink" title="OAuth 2.0"></a>OAuth 2.0</h4><p>클라이언트의 인증을 위해 클라이언트 ID와 클라이언트 Secret과 같은 키를 발급하고 이를 통해 토큰을 발급하는 방법. 사용자에 대한 인증을 시작으로 사용에 대한 각 API마다 Authorization(허가)를 관리 할 수도 있다. OPEN API를 제공하는 많은 API Provider가 사용하고 있는 방식이다.</p>
+<ul>
+<li>서비스가 제공하는 API에 일관적인 인증방법을 제시한다.</li>
+<li>인증시에 참조됐던 정보는 이후 API 호출에 중복적으로 호출하지 않아도 된다.</li>
+</ul>
+<h4 id="RSA-암호화-및-Signature-검증"><a href="#RSA-암호화-및-Signature-검증" class="headerlink" title="RSA 암호화 및 Signature 검증"></a>RSA 암호화 및 Signature 검증</h4><p>API Key를 발급하고 요청파라미터와 조합하여 Hashing 한 값을 비교하는 방법</p>
+<ul>
+<li>서비스가 제공하는 API중 보안이 강력하게 필요한 API에 선택적으로 적용할 수 있다.</li>
+<li>API Key를 이용한 Signature 생성을 클라이언트에 위임하게 된다.</li>
+</ul>
+<h4 id="요청-정보-암호화"><a href="#요청-정보-암호화" class="headerlink" title="요청 정보 암호화"></a>요청 정보 암호화</h4><p>HTTP Request에 포함되는 요청정보를 암호화해서 전달하도록 한다.</p>
+<ul>
+<li>UTF-8 Encoding</li>
+<li>암호화</li>
+</ul>
+<h4 id="ACL기법"><a href="#ACL기법" class="headerlink" title="ACL기법"></a>ACL기법</h4><p>특정 API는 private 하게 제공할 수 있어야 한다.</p>
+<ul>
+<li>지정된 Domain만 접근 가능</li>
+<li>지정된 IP만 접근 가능</li>
+</ul>
+<blockquote>
+<p>API 요청에 대한 검증을 위해 API Key(대칭키)는 각 시스템 상호간의 서버에서만 알 수 있는 정보이여야만 한다. 클라이언트/서버간 요청/응답 정보에서는 Sniping 으로 인해 탈취될 수 있기 때문에 API Key를 첨부해서는 안된다.</p>
+<p>API Key는 노출될 수 없기 때문에 인증대상(값)을 선별하고 API Key와 조합하여 해싱된 Signature를 생성할수 있어야 한다.</p>
+</blockquote>
+<h2 id="API-Gateway의-인증"><a href="#API-Gateway의-인증" class="headerlink" title="API Gateway의 인증"></a>API Gateway의 인증</h2><h4 id="API-검증을-위한-인증-수단-제공"><a href="#API-검증을-위한-인증-수단-제공" class="headerlink" title="API 검증을 위한 인증 수단 제공"></a>API 검증을 위한 인증 수단 제공</h4><p>기본적으로 API Gateway에서는 클라이언트의 요청에 대해서 아래와 같이 다양한 PG Provider와 연동할수 있도록 일관적인 API를 제공한다.</p>
+<p>내부적으로 각 PG Provider와 승인내역에 대한 검증절차를 가지지만 PG Provider별로 인증/보안스펙이 상이하고 API Gateway에서 2차적으로 일관적인 API 검증방식을 제공하면 좋을 것이다.</p>
+<p><img src="http://image.toast.com/aaaacd/Dongle/api_gateway.png"></p>
+<h4 id="Signature-생성을-위한-알고리즘"><a href="#Signature-생성을-위한-알고리즘" class="headerlink" title="Signature 생성을 위한 알고리즘"></a>Signature 생성을 위한 알고리즘</h4><p>인증 대상값을 통해 String Data를 생성하고 API Key를 통해 아래와 같이 Hashing 하도록 한다.</p>
+<p><img src="http://photo.toast.com/aaaacd/Dongle/hashing_flow.png"></p>
+<p><code>String Data 생성</code></p>
+<p><code>UTF-8 Encoding</code></p>
+<p><code>HMAC (해시 기반 메세지 인증 코드)</code></p>
+<ul>
+<li>짧고 고정 길이이다.</li>
+<li>중복을 방지할 수 있다.</li>
+<li>메세지 구조를 숨길 수 있다.</li>
+</ul>
+<p><code>SHA-256</code></p>
+<p>SHA256을 통한 HMAC 해싱값이 현재 MD5 / SHA1에 비해 보안적으로 유리하다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HMAC_MD5(&quot;key&quot;, &quot;The quick brown fox jumps over the lazy dog&quot;)    = 0x80070713463e7749b90c2dc24911e275</span><br><span class="line">HMAC_SHA1(&quot;key&quot;, &quot;The quick brown fox jumps over the lazy dog&quot;)   = 0xde7c9b85b8b78aa6bc8a7a36f70a90701c9db4d9</span><br><span class="line">HMAC_SHA256(&quot;key&quot;, &quot;The quick brown fox jumps over the lazy dog&quot;) = 0xf7bc83f43053</span><br></pre></td></tr></table></figure>
+<p><code>Base64 Encoding - RFC 4648</code></p>
+<p>최종적으로 해싱이 완료된 Binary를 최종적으로 클라이언트/서버간 전달할수 있도록 Base64로 인코딩하여 문자열을 획득한다.</p>
+<h4 id="API-요청-및-Signature-생성에-대한-가이드"><a href="#API-요청-및-Signature-생성에-대한-가이드" class="headerlink" title="API 요청 및 Signature 생성에 대한 가이드"></a>API 요청 및 Signature 생성에 대한 가이드</h4><p>클라이언트 개발자가 만약 위와 같은 API 명세를 참고하여 API를 클라이언트와 연동한다면 API Reference를 통해 가이드를 하면 모든것이 해결될까? 개인적인 경험으로는 REST API 뿐만 아니라, 이외의 API를 배포할 때에는 상세한 API Reference보다는 아래의 방식이 가장 효과가 좋았다.</p>
+<ul>
+<li>각 플랫폼별 클라이언트에서 사용할수 있는 SDK를 개발하여 배포하면 가장 좋지만, 비용이 많이 든다.</li>
+<li>클라이언트의 플랫폼이 다양해 SDK배포에 제한이 있다면, API Reference에서는 상세한 예제 및 샘플코드를 첨부하도록 한다.</li>
+</ul>
+<p>예를들면 위의 Signature 문자열을 생성하기 위한 예제를 살펴보면 아래와 같다.</p>
+<ul>
+<li>Signature을 생성하기 위한 절차를 처음 소개할때부터 그림으로 한눈에 볼수 있으면 좋을것 이다.</li>
+</ul>
+<p><code>Signature 생성규약</code></p>
+<p><img src="http://photo.toast.com/aaaacd/Dongle/hashing_flow.png"></p>
+<p><br></p>
+<p>예를 들어, 아래와 같이 API Key를 문자열인 <code>4044cac130913f94a5d4979e0401500e</code> 라고 가정하고, 인증이 필요한 요청정보는 Alphabetical 순서로 append 하여 조합합니다.</p>
+<table>
+<thead>
+<tr>
+<th>API Key</th>
+<th>4044cac130913f94a5d4979e0401500e</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API Parameter 중 인증대상정보를 Append</td>
+<td>944542050178560694342P1510100001</td>
+</tr>
+</tbody>
+</table>
+<p>데이터 문자열인 <code>944542050178560694342P1510100001</code> 를 UTF-8 Encoding을 이용해 Binary 로 변환하면 아래와 같은 값(HEX 문자열)이 됩니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3934343534323035303137383536303639343334325031353130313030303031</span><br></pre></td></tr></table></figure>
+<p><code>3934343534323035303137383536303639343334325031353130313030303031</code> 값(HEX 문자열)을 위의 API Key 문자열인 <code>4044cac130913f94a5d4979e0401500e</code> 을 통해 HMAC-SHA256로 해싱하면, 아래와 같은 값(HEX 문자열)이 되며,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a6f6c3bfb4d30326db6285c0488e67616b2754f23c946582734d157501cd2c77</span><br></pre></td></tr></table></figure>
+<p>해싱된 바이너리를 Base64 Encoding 하면 아래와 같은 Signature 문자열을 획득할수 있습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pvbDv7TTAybbYoXASI5nYWsnVPI8lGWCc00VdQHNLHc=</span><br></pre></td></tr></table></figure>
+<p>정리를 하면, <code>944542050178560694342P1510100001</code> 인 String Data를 위와 같은 규약으로 <code>4044cac130913f94a5d4979e0401500e</code> 문자열의 API Key와 HMAC-SHA256 방식으로 해싱하게 되면 아래와 같은 Signature 문자열을 얻을 수 있어야 합니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pvbDv7TTAybbYoXASI5nYWsnVPI8lGWCc00VdQHNLHc=</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>문서 내에서는 ‘RFC4648 방식으로 Base64 인코딩하라’라고 간단히 기술했으나, 이것의 내부적인 의미는 다음과 같습니다.</p>
+<ul>
+<li><a href="http://www.ietf.org/rfc/rfc4648.txt" target="_blank" rel="external">http://www.ietf.org/rfc/rfc4648.txt</a></li>
+</ul>
+</blockquote>
+<p>위와 같이 각 플랫폼별로 SDK 및 샘플코드를 제공하는것이 제한된다면, Signature 생성을 위해 필요한 값의 예제를 주고 각 Step별로 기대값을 가이드하면 클라이언트 개발자가 API를 보다 효율적으로 연동하는 사례가 많았다.</p>
+<h2 id="구현하기"><a href="#구현하기" class="headerlink" title="구현하기"></a>구현하기</h2><p>지금까지는 API 요청에 대한 검증을 위한 스펙을 간단하게 정의해보았고, 외부에 이를 공유하기 위한 효율적인 방법을 제시해 보았다. 이어서 Spring MVC를 통해 애플리케이션을 개발한다면 API요청에 대한 검증을 어떻게 처리하며, 각 API에 공통적으로 적용하기 위한 예제를 살펴보도록 하겠다.</p>
+<h4 id="API검증을-위한-공통-비지니스로직-적용"><a href="#API검증을-위한-공통-비지니스로직-적용" class="headerlink" title="API검증을 위한 공통 비지니스로직 적용"></a>API검증을 위한 공통 비지니스로직 적용</h4><p>현재 API Gateway에는 아래와 같은 공통적인 요구사항이 있다고 가정해보자.</p>
+<ul>
+<li>API 요청 클라이언트가 인증된 클라이언트인지 체크</li>
+<li>각 API 요청정보를 명세된 Signature 값을 통해 검증</li>
+<li>클라이언트에 대한 인증이 성공적이라면, 자주 참조하는 클라이언트의 세션정보를 캐싱한다.</li>
+</ul>
+<p><img src="http://photo.toast.com/aaaacd/Dongle/call_stack.png"></p>
+<p><img src="http://photo.toast.com/aaaacd/Dongle/app_stack.PNG"></p>
+<p>아래와 같이 Controller의 Method Parameter에 @ValidSignature 어노테이션과 DeviceSession 클래스를 정의하면, API요청에 대한 Signature 검증을 하고 정상적이면 DeviceSession에 필요한 Cached Data를 간단하게 전달받을 수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/auth/v1/authentication"</span>, method = RequestMethod.POST, headers = &#123;<span class="string">"Content-Type=application/json"</span>&#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Response <span class="title">authentication</span><span class="params">(@RequestBody AuthenticationRequest request, @ValidSignature DeviceSession deviceSession)</span> </span>&#123;</span><br><span class="line">    LOGGER.info(request.toString());</span><br><span class="line">     </span><br><span class="line">    AuthenticationResponse response = authenticationService.authentication(request);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ResponseObject&lt;&gt;(response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>MDCFilter / DeviceInterceptor</code></p>
+<p>요청 정보에 대한 MDC 값을 획득하고, IP정보와 같은 공통적인 수집사항은 Inteceptor를 정의하여 확인할수 있도록 한다.</p>
+<p><code>HandlerMethodArgumentResolver 등록</code></p>
+<p><code>org.springframework.web.method.support.HandlerMethodArgumentResolver</code> 인터페이스를 구현한 Bean을 등록한다.</p>
+<p><code>@ValidSignature</code></p>
+<p>API 요청에 대한 Signature를 검증한다.</p>
+<p><code>DeviceSession</code></p>
+<p>인증이 성공된 요청에 대해 캐싱된 세션정보 Controller의 Method Argument를 통해 전달한다.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>지금까지 클라이언트에서 다양한 Back-End 시스템에 직접 연동하는것이 제한이 될때 필요한 시스템 구성을 살펴보았고 이를 API Gateway의 역할이라고 설명하였다. API Gateway에서 일관적인 API를 제공할 때 API 요청에 대한 검증을 위한 스펙은 각 시스템의 상황에 맞게 정의하면 될 것 이다.</p>
+<p>중요한 것은 유행하는 아키텍쳐를 수립하기 보다는 어떠한 문제가 있으며 이를 해결해나가기 위한 방법이 어떠한 것들이 있는지 작은 단위부터 접근해 나가는것이 좋을듯 하다.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Hash-based_message_authentication_code" target="_blank" rel="external">https://en.wikipedia.org/wiki/Hash-based_message_authentication_code</a><br><a href="http://www.jokecamp.com/blog/examples-of-creating-base64-hashes-using-hmac-sha256-in-different-languages/" target="_blank" rel="external">http://www.jokecamp.com/blog/examples-of-creating-base64-hashes-using-hmac-sha256-in-different-languages/</a></p>
+</blockquote>
+</div></article></div></main><footer><div class="paginator"><a class="prev" href="/2015/08/24/devops-api-gateway/"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="next" href="/2015/10/10/spring-boot-multi-datasources/"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></div><ins class="adsbygoogle adsense-bottom" style="display:block;" data-ad-client="ca-pub-6188640546219653" data-ad-slot="6129396565" data-ad-format="auto"></ins><div class="fb-comments-area"><div class="fb-comments" data-href="https://www.holaxprogramming.com/2015/09/11/devops-api-gateway-authentication/" data-width="700" data-numposts="5"></div></div><div class="copyright"><p>© 2012 - 2022 <a href="https://github.com/stunstunstun" target="_blank">Minhyeok Jung</a>. Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/stunstunstun/hexo-theme-chiangmai" target="_blank">hexo-theme-chiangmai</a>.</p></div></footer></div><script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({});</script><script>window.fbAsyncInit=function(){FB.init({appId:"1258629384258634",cookie:!0,xfbml:!0,version:"v2.8"}),FB.AppEvents.logPageView()},function(e,n,t){var o,c=e.getElementsByTagName(n)[0];e.getElementById(t)||((o=e.createElement(n)).id=t,o.src="//connect.facebook.net/en_US/sdk.js",c.parentNode.insertBefore(o,c))}(document,"script","facebook-jssdk");</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create','UA-97419941-1','auto');ga('send','pageview');</script></body></html>

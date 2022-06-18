@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="ko" prefix="og: http://ogp.me/ns#"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>안드로이드 플랫폼에서 TDD와 효율적인 테스트 · 안녕 프로그래밍</title><meta name="description" content="안녕 프로그래밍"><meta name="og:title" content="안드로이드 플랫폼에서 TDD와 효율적인 테스트"><meta name="og:type" content="website"><meta name="og:url" content="https://www.holaxprogramming.com/2014/12/29/android-testing/"><meta name="og:image" content="http://image.toast.com/aaaaahq/hola_cover.JPG"><meta name="og:description" content="안녕 프로그래밍"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/chiangmai.css"><meta name="steem:author" content="@stunstunstun"><meta name="fb:app_id" content="1258629384258634"><link rel="search" type="application/opensearchdescription+xml" href="https://www.holaxprogramming.com/atom.xml" title="안녕 프로그래밍"></head><body class="post"><div id="fb-root"></div><div class="wrap"><header><nav class="navi-post"><a class="navi-post-back" href="javascript:history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="navi-post-home" href="/"><i class="fa fa-home" aria-hidden="true"></i></a></nav></header><main class="post"><div class="post"><article class="post-block"><h1 class="post-title">안드로이드 플랫폼에서 TDD와 효율적인 테스트</h1><div class="post-info"><div class="post-info-profile"><a href="https://github.com/stunstunstun" target="_blank"><img src="/image/profile.jpg"></a></div><div class="post-info-details"><div class="post-categories"><a href="/categories/android" target="_self"><span>ANDROID</span></a></div><div class="post-date">2014년 12월 29일</div></div></div><div class="post-share"><div class="fb-like" data-href="https://www.holaxprogramming.com/2014/12/29/android-testing/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false">                 </div><div class="fb-share-button" data-href="https://www.holaxprogramming.com/2014/12/29/android-testing/" data-layout="button" data-size="small" data-mobile-iframe="true"></div><div class="fb-follow" data-href="https://www.facebook.com/holaxprogramming/" data-layout="button_count" data-size="small" data-show-faces="true"></div></div><div class="post-content"><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>TDD는 테스트코드를 작성하면서 유연한 인터페이스 설계를 하도록 도와준다면, 단위테스트는 TDD라는 틀 안에서 자신이 개발한 결과를 빠르게 확인할수 있는 가장 효율적인 도구라고 생각한다.</p>
+<p>더욱이 Android와 같은 클라이언트 환경에서 테스트 케이스가 존재 하지 않는다면 어플리케이션을 실행하기 위한 빌드와 테스트를 위한 화면에 진입하는 단계까지의 과정은 꽤나 번거롭다고 할 수 있겠다.Spring 기반의 웹어플리케이션 뿐만 아니라 Android 개발시에도 단위테스트는 선택이 아니라 필수라고 한다면, 효율적으로 테스트하기 위한 전략은 어떠한 것들이 있는지 살펴 보도록 하자.</p>
+<h2 id="효율적인-테스트를-위한-전략"><a href="#효율적인-테스트를-위한-전략" class="headerlink" title="효율적인 테스트를 위한 전략"></a>효율적인 테스트를 위한 전략</h2><h4 id="디바이스-환경-vs-로컬-환경"><a href="#디바이스-환경-vs-로컬-환경" class="headerlink" title="디바이스 환경 vs 로컬 환경"></a>디바이스 환경 vs 로컬 환경</h4><p>Android SDK를 통해 개발되는 애플리케이션은 크게 아래와 같이 두가지 방법을 통해 단위테스트가 가능하다.</p>
+<ul>
+<li>DalvikVM 기반의 테스트</li>
+<li>JVM기반의 테스트</li>
+</ul>
+<p>Android에서 기본적으로 제공되는 테스트 프레임워크를 사용하게 되면 DalvikVM에서 테스트를 실행 할 수 있지만 아래와 같은 몇몇 제약사항이 존재한다.</p>
+<ul>
+<li>느린 테스트 실행 속도</li>
+<li>Mock을 위한 클래스에 대한 제약사항</li>
+<li>JUnit3 기반의 테스트 프레임워크</li>
+</ul>
+<p>이중 무엇보다 느린 테스트 실행 속도는 TDD를 위한 테스트코드를 작성하는데 가장 의욕을 꺽이게 하는 부분이다. Android의 실행환경에서는 DalvikVM 기반이기 때문에 테스트코드도 시뮬레이터 또는 디바이스에서 실행되어야 한다.</p>
+<p>그래서 만약 테스트시에 코드를 한줄만 수정을 한다고 하더라도, 애플리케이션의 실행을 위해 빌드 및 APK생성, 설치, 실행이 테스트 프로세스에 포함되어 상당히 많은 시간이 소요된다. 이 문서에서는 이러한 문제를 해결하기 위해 JVM환경에서 테스트하기 위한 기법들을 중점적으로 정리해보려고 한다.</p>
+<h4 id="테스트-코드를-통한-API-Reference"><a href="#테스트-코드를-통한-API-Reference" class="headerlink" title="테스트 코드를 통한 API Reference"></a>테스트 코드를 통한 API Reference</h4><p>특정 범위에 대한 테스트 뿐만 아니라, 테스트코드를 통해 다수의 개발자에게 API Reference 역할을 할 수도 있을 것이다.</p>
+<ul>
+<li>애플리케이션이 아닌 특정 서비스 연동을 위한 SDK형태로 제공한다면, SDK내의 API를 가이드하는 훌륭한 Reference가 될 수 있다.</li>
+<li>서버API에 대한 명세도 테스트 코드를 통해 훌륭한 예제가 될수 있다.</li>
+</ul>
+<h4 id="테스트-자동화"><a href="#테스트-자동화" class="headerlink" title="테스트 자동화"></a>테스트 자동화</h4><ul>
+<li>Ant/Gradle과 같은 빌드 도구를 이용해 빌드/배포 프로세스에 테스트 프로세스를 포함 시킨다.</li>
+<li>서버 API의 변경 내역에 대한 탐지가 가능하다.</li>
+</ul>
+<h4 id="오픈소스-사용에-대한-고려"><a href="#오픈소스-사용에-대한-고려" class="headerlink" title="오픈소스 사용에 대한 고려"></a>오픈소스 사용에 대한 고려</h4><p>JVM 기반에서 테스트하기 위해서는 DI와 의존클래스에 대한 Mock구현이 중요하다. 이를 위해서 아래와 같은 오픈소스 적용을 고려한다.</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>이름</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DI</td>
+<td>Roboguice</td>
+<td><a href="https://github.com/roboguice/roboguice" target="_blank" rel="external">https://github.com/roboguice/roboguice</a></td>
+</tr>
+<tr>
+<td>DI</td>
+<td>Android Annotations</td>
+<td><a href="http://androidannotations.org/" target="_blank" rel="external">http://androidannotations.org/</a></td>
+</tr>
+<tr>
+<td>Mock</td>
+<td>PowerMock / Mockito</td>
+<td><a href="https://code.google.com/p/powermock/" target="_blank" rel="external">https://code.google.com/p/powermock/</a></td>
+</tr>
+<tr>
+<td>테스트</td>
+<td>Robolectric</td>
+<td><a href="http://robolectric.org/" target="_blank" rel="external">http://robolectric.org/</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="로컬-환경에서-테스트를-위한-Android-프로젝트-구조"><a href="#로컬-환경에서-테스트를-위한-Android-프로젝트-구조" class="headerlink" title="로컬 환경에서 테스트를 위한 Android 프로젝트 구조"></a>로컬 환경에서 테스트를 위한 Android 프로젝트 구조</h2><p>JVM기반에서 테스트 하기 위해서는 DalvikVM 환경의 디바이스 또는 Android 프레임워크에 의존적인 클래스와 분리된 테스트 프로젝트를 생성하여야 한다.</p>
+<h4 id="테스트-프로젝트-생성-및-설정"><a href="#테스트-프로젝트-생성-및-설정" class="headerlink" title="테스트 프로젝트 생성 및 설정"></a>테스트 프로젝트 생성 및 설정</h4><ul>
+<li>Android Project의 Root 경로에 /tests 폴더를 생성한다.</li>
+<li>이클립스 &gt; File &gt; New &gt; Java Project 선택</li>
+<li>Project Name 입력 후 Use default location 체크 해제 후 Android Project의 /tests 폴더의 경로를 지정</li>
+<li>생성된 테스트 프로젝트에서 Configure Build Path &gt; Projects &gt; Add 를 통해 Android Project 추가</li>
+</ul>
+<p><img src="http://image.toast.com/aaaaahq/android-tdd-0.png"></p>
+<p><img src="http://image.toast.com/aaaaahq/android-tdd-1.png"></p>
+<h4 id="테스트-코드-작성"><a href="#테스트-코드-작성" class="headerlink" title="테스트 코드 작성"></a>테스트 코드 작성</h4><ul>
+<li>JVM기반의 테스트환경에서 실행하기 위한 클래스는 /src 폴더에 작성한다.</li>
+<li>@Test를 통한 테스트코드는 /test 폴더에 작성한다.</li>
+</ul>
+<p><img src="http://image.toast.com/aaaaahq/android-tdd-2.png"></p>
+<h4 id="Run-Configurations"><a href="#Run-Configurations" class="headerlink" title="Run Configurations"></a>Run Configurations</h4><p>DalvikVM 환경이 아닌 로컬에서의 테스트를 위해 Eclipse JUnit Launcher를 선택하여 테스트실행</p>
+<p><img src="http://image.toast.com/aaaaahq/android-tdd-3.png"></p>
+<h2 id="테스트-기법-amp-TDD를-통한-인터페이스-설계"><a href="#테스트-기법-amp-TDD를-통한-인터페이스-설계" class="headerlink" title="테스트 기법 &amp; TDD를 통한 인터페이스 설계"></a>테스트 기법 &amp; TDD를 통한 인터페이스 설계</h2><p>위에서는 DalvikVM 환경에서 안드로이드의 기본 테스트프레임워크를 사용했을때의 문제점을 알아보았다. 이를 해결하기 위해 JVM기반에서 효율적으로 테스트 할수 있는 방법에는 어떠한 것들이 있는지 알아보도록 하겠다.</p>
+<h4 id="Test-를-위한-인터페이스-설계"><a href="#Test-를-위한-인터페이스-설계" class="headerlink" title="@Test 를 위한 인터페이스 설계"></a>@Test 를 위한 인터페이스 설계</h4><p>Android의 기본프레임워크 구조에서는 Activity 또는 Context와 같은 슈퍼클래스가 많은 역할을 하고 있다. Android에서는 테스트용 Mock객체를 활용하기 위해서는 강력한 상속관계 때문에 상위 클래스의 동작을 가로채야 하는데, 이러한 부분이 테스트 범위를 고려하는데 있어서 걸림돌이 될수 있다.</p>
+<p>이러한 부분에 대한 해결책으로 상속보다는 위임을 통해 구현할수 있다면, DI를 이용해 의존관계를 구성하여 테스트시에 유연하게 활용 할수 있게 된다.</p>
+<p><code>Example) SQLite 를 사용하는 Interface에 대한 설계</code></p>
+<p><img src="http://image.toast.com/aaaaahq/android-tdd-4.png"></p>
+<ul>
+<li>위와 같이 SQLite를 통해 결제내역을 관리하는 PurchaseLogDao 라는 인터페이스를 통해 테스트환경과 디바이스환경의 구현클래스를 별도로 구현하도록 한다.</li>
+<li>디바이스 환경에서는 PurchaseLogDaoImpl 을 통해 SQLite에 접근하게 되지만, 테스트 환경에서는 PurchaseLogDaoMock를 통해 JVM환경에서 실행되게 된다.</li>
+</ul>
+<h4 id="android-util-Log"><a href="#android-util-Log" class="headerlink" title="android.util.Log"></a>android.util.Log</h4><p>Android 프레임워크에서는 디버깅을 위해서 Log클래스를 사용하게 되는데, JVM 테스트 실행환경에서는 android.util.Log 접근시에 RuntimeError를 발생하게 된다. 이를 위해서는 로그를 위한 Wrapper 클래스를 구현하도록 한다.</p>
+<p><code>DalvikVM에서의 로그를 위한 Logger 클래스</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Logger</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">i</span><span class="params">(String format, Object... args)</span> </span>&#123;</span><br><span class="line">       Log.i(TAG, String.format(format, args));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Android Project에 위치하게 된다.</p>
+</blockquote>
+<p><code>JVM에서의 로그를 위한 Logger 클래스</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Logger</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">i</span><span class="params">(String format, Object... args)</span> </span>&#123;</span><br><span class="line">       System.out.println(TAG + String.format(format, args));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>테스트 Project에 위치하게 된다.</p>
+</blockquote>
+<h4 id="Asynchronous-구현에-대한-테스트"><a href="#Asynchronous-구현에-대한-테스트" class="headerlink" title="Asynchronous 구현에 대한 테스트"></a>Asynchronous 구현에 대한 테스트</h4><p>보통 어플리케이션 또는 어플리케이션을 위한 SDK는 서버 API연동을 위해 새로운 Thread를 생성해 Asynchronous한 구현을 하게 된다. 하지만, JUnit을 통한 단위테스트에서는 새롭게 생성된 다른 Thread에 대한 테스트를 하는데 제약사항이 존재한다. 이와 같은 경우에도 interface를 통해 실행환경에 따라 참조 또는 DI 할수있도록 구현한다.</p>
+<p><code>HTTP 요청을 interface</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">class</span> <span class="title">RequestRunner</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">abstract</span> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(ResponseListener&lt;T&gt; listener)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>실제 환경에서의 Asynchronous한 구현</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncRequestRunner</span> <span class="keyword">extends</span> <span class="title">RequestRunner</span>&lt;<span class="title">String</span>&gt; </span>&#123;</span><br><span class="line">     </span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(ResponseListener&lt;String&gt; listener)</span> </span>&#123;</span><br><span class="line">     <span class="comment">// <span class="doctag">TODO:</span> Asynchronous...</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>테스트 환경에서의 Synchronous한 구현</code><br>public class AsyncRequestRunner extends RequestRunner<string> {</string></p>
+<pre><code>@Override
+public void call(ResponseListener&lt;String&gt; listener) {
+// TODO: Synchronous...
+}
+</code></pre><p>}</p>
+<h4 id="예제를-통한-API-테스트"><a href="#예제를-통한-API-테스트" class="headerlink" title="예제를 통한 API 테스트"></a>예제를 통한 API 테스트</h4><p>서버 API를 위한 테스트를 JSON 형태의 정적파일을 통해 하게되면 아래와 같은 장점이 생긴다.</p>
+<ul>
+<li>서버 API가 구현되지 않아도, 실제 네트워크 연결 없이 테스트 가능하다.</li>
+<li>훌륭한 API Reference 역할을 하게 된다.</li>
+</ul>
+<p><code>파일처리를 위한 클래스 구현</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUtils</span> </span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getJsonFromFile</span><span class="params">(@SuppressWarnings(<span class="string">"rawtypes"</span>)</span> Class clazz, String fileName) <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">          ............</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>테스트코드</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reserveApiTest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     String responseBody = FileUtils.getJsonFromFile(getClass(), <span class="string">"json/reserve_response_body.json"</span>);</span><br><span class="line">     Request request = <span class="keyword">new</span> Request(<span class="keyword">new</span> ResponseCallback() &#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCallback</span><span class="params">(String response)</span> </span>&#123;</span><br><span class="line">               ......</span><br><span class="line">          &#125;</span><br><span class="line">     &#125;);</span><br><span class="line">     request.setResponseForTest(responseBody);</span><br><span class="line">     request.run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>reserve_request_body.json</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> &quot;userKey&quot;:&quot;GUEST58e452c3b3&quot;,</span><br><span class="line"> &quot;appSeq&quot;:1000030,</span><br><span class="line"> &quot;itemSeq&quot;:1000048,</span><br><span class="line"> &quot;userChannel&quot;:&quot;GF&quot;,</span><br><span class="line"> &quot;currency&quot;:&quot;N/A&quot;,</span><br><span class="line"> &quot;price&quot;:0</span><br><span class="line">&#125;</span><br><span class="line">   reserve_response_body.json</span><br><span class="line">&#123;</span><br><span class="line">   &quot;result&quot;:&#123;</span><br><span class="line">     &quot;marketId&quot;: &quot;TEST&quot;,</span><br><span class="line">     &quot;paymentSeq&quot;: &quot;2014122910105580&quot;,</span><br><span class="line">     &quot;marketItemId&quot;: &quot;gas&quot;</span><br><span class="line">   &#125;,</span><br><span class="line">   &quot;message&quot;: &quot;success&quot;,</span><br><span class="line">   &quot;code&quot;: 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="SQLite과-같은-디바이스-종속적인-테스트-범위-Activity-Context-객체와-같은-Android와-의존적인-클래스가-포함된-영역"><a href="#SQLite과-같은-디바이스-종속적인-테스트-범위-Activity-Context-객체와-같은-Android와-의존적인-클래스가-포함된-영역" class="headerlink" title="SQLite과 같은 디바이스 종속적인 테스트 범위 / Activity, Context 객체와 같은 Android와 의존적인 클래스가 포함된 영역"></a>SQLite과 같은 디바이스 종속적인 테스트 범위 / Activity, Context 객체와 같은 Android와 의존적인 클래스가 포함된 영역</h4><p>이와 같은 경우에도 android.util.Log 클래스와 같이 JVM기반의 테스트환경에서는 RuntimeError를 발생하게 되는데, 테스트를 위해서는 아래와 같은 방법을 고려할수 있다.</p>
+<ul>
+<li>interface를 통한 실행 환경별 구현</li>
+<li>PowerMock / Mokito 를 활용한 Mocking을 통한 테스트</li>
+<li>JVM기반에서 테스트 할 수있는 환경을 제공하는 Robolectric같은 테스트 프레임워크의 사용</li>
+</ul>
+<h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><ul>
+<li>Android 플랫폼에서 신속하고 빠르게 테스트 하기 위해서는 선택과 집중이 필요하다.</li>
+<li>가장 자주 사용되는 서버 API를 테스트 하기 위한 효율적인 전략을 수립하도록 한다.</li>
+<li>Presentation Layer까지 테스트 자동화하는 것은 오히려 비효율적일 수도 있다.</li>
+<li>TDD를 적극적으로 도입하여 인터페이스 기반의 유연한 구현이 가능하도록 설계한다.</li>
+</ul>
+<p>정리하면, Android 플랫폼에서의 단위테스트의 필요성을 느끼고, 기본적인 내용에 충실히 하여 이러한 문제를 해결하기 위한 효율적인 방법을 고민하면 어떨까 합니다. 나아가서는 오픈소스 기반의 테스트 프레임워크를 사용하여 조금 더 효율적으로 테스트할 수도 있을 것 입니다.</p>
+</div></article></div></main><footer><div class="paginator"><a class="prev" href="/2014/09/24/java-open-jdk/"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="next" href="/2014/12/29/android-ci-environments/"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></div><ins class="adsbygoogle adsense-bottom" style="display:block;" data-ad-client="ca-pub-6188640546219653" data-ad-slot="6129396565" data-ad-format="auto"></ins><div class="fb-comments-area"><div class="fb-comments" data-href="https://www.holaxprogramming.com/2014/12/29/android-testing/" data-width="700" data-numposts="5"></div></div><div class="copyright"><p>© 2012 - 2022 <a href="https://github.com/stunstunstun" target="_blank">Minhyeok Jung</a>. Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/stunstunstun/hexo-theme-chiangmai" target="_blank">hexo-theme-chiangmai</a>.</p></div></footer></div><script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({});</script><script>window.fbAsyncInit=function(){FB.init({appId:"1258629384258634",cookie:!0,xfbml:!0,version:"v2.8"}),FB.AppEvents.logPageView()},function(e,n,t){var o,c=e.getElementsByTagName(n)[0];e.getElementById(t)||((o=e.createElement(n)).id=t,o.src="//connect.facebook.net/en_US/sdk.js",c.parentNode.insertBefore(o,c))}(document,"script","facebook-jssdk");</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create','UA-97419941-1','auto');ga('send','pageview');</script></body></html>

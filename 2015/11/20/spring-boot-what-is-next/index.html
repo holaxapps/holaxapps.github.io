@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="ko" prefix="og: http://ogp.me/ns#"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>앞으로 무엇을 하면 좋을까? · 안녕 프로그래밍</title><meta name="description" content="Spring Boot 레시피"><meta name="og:title" content="앞으로 무엇을 하면 좋을까?"><meta name="og:type" content="website"><meta name="og:url" content="https://www.holaxprogramming.com/2015/11/20/spring-boot-what-is-next/"><meta name="og:image" content="http://image.toast.com/aaaaahq/hola_cover.JPG"><meta name="og:description" content="Spring Boot 레시피"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/chiangmai.css"><meta name="steem:author" content="@stunstunstun"><meta name="fb:app_id" content="1258629384258634"><link rel="search" type="application/opensearchdescription+xml" href="https://www.holaxprogramming.com/atom.xml" title="안녕 프로그래밍"></head><body class="post"><div id="fb-root"></div><div class="wrap"><header><nav class="navi-post"><a class="navi-post-back" href="javascript:history.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="navi-post-home" href="/"><i class="fa fa-home" aria-hidden="true"></i></a></nav></header><main class="post"><div class="post"><article class="post-block"><h1 class="post-title">앞으로 무엇을 하면 좋을까?</h1><div class="post-info"><div class="post-info-profile"><a href="https://github.com/stunstunstun" target="_blank"><img src="/image/profile.jpg"></a></div><div class="post-info-details"><div class="post-categories"><a href="/categories/spring-boot" target="_self"><span>SPRING-BOOT</span></a></div><div class="post-date">2015년 11월 20일</div></div></div><div class="post-share"><div class="fb-like" data-href="https://www.holaxprogramming.com/2015/11/20/spring-boot-what-is-next/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false">                 </div><div class="fb-share-button" data-href="https://www.holaxprogramming.com/2015/11/20/spring-boot-what-is-next/" data-layout="button" data-size="small" data-mobile-iframe="true"></div><div class="fb-follow" data-href="https://www.facebook.com/holaxprogramming/" data-layout="button_count" data-size="small" data-show-faces="true"></div></div><div class="post-content"><h2 id="Java기반의-웹-애플리케이션에서-고려해야-할-사항들"><a href="#Java기반의-웹-애플리케이션에서-고려해야-할-사항들" class="headerlink" title="Java기반의 웹 애플리케이션에서 고려해야 할 사항들"></a>Java기반의 웹 애플리케이션에서 고려해야 할 사항들</h2><p>Spring Boot을 사용하면서 자연스럽게 Spring의 Version을 4.x 으로 업데이트 해야했고, 또 빌드 도구를 Gradle로 변경하면서 발생 됐던 이슈 리스트를 정리해 보았다.</p>
+<h4 id="Dev"><a href="#Dev" class="headerlink" title="Dev"></a>Dev</h4><table>
+<thead>
+<tr>
+<th>Issues</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Database Access</td>
+<td>Spring Boot에서 myBatis를 통해 JDBC 연동하기</td>
+</tr>
+<tr>
+<td>DBCP</td>
+<td>Spring Boot에서 DB Connection Pool 관리를 위한 구현체 선택</td>
+</tr>
+<tr>
+<td>Transactions</td>
+<td>Spring Transaction Manager</td>
+</tr>
+<tr>
+<td>Logging</td>
+<td><code>spring-starter-web</code>의 경우 디폴트로 logback을 지원 (common-logging &amp; log4j -&gt; slf4j &amp; logback)</td>
+</tr>
+<tr>
+<td>Spring Config</td>
+<td>Java Config를 통해 XML Scheme 방식의 Configurations에서 벗어나기</td>
+</tr>
+<tr>
+<td>환경 변수 관리</td>
+<td>시스템 환경 변수와 <code>@Profile</code>를 이용한 배포 환경 구분하기</td>
+</tr>
+<tr>
+<td>외부 서비스 연동을 위한 HTTP 클라이언트</td>
+<td><code>Spring RestTemplate</code>    </td>
+</tr>
+<tr>
+<td>Spring MVC</td>
+<td>REST API, <code>@ExceptionHandler</code>, <code>@ControllerAdvice</code>    </td>
+</tr>
+<tr>
+<td>Spring Boot에서의 Servlet</td>
+<td>WebApplicationInitializer 인터페이스 구현</td>
+</tr>
+<tr>
+<td>Templates</td>
+<td>Thymeleaf</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Ops"><a href="#Ops" class="headerlink" title="Ops"></a>Ops</h4><table>
+<thead>
+<tr>
+<th>Issues</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gradle 기반의 프로젝트 Building</td>
+<td>로컬 개발 환경 구성 <code>Java</code> <code>Gradle</code> <code>STS IDE</code> or <code>IDEA IntelliJ</code> </td>
+</tr>
+<tr>
+<td>Gradle, Spring Boot의 멀티 프로젝트 구조</td>
+<td>부모 프로젝트인 <code>core</code>와 <code>api</code> <code>batch</code> <code>admin</code>등 하위 모듈로 구성되는 프로젝트</td>
+</tr>
+<tr>
+<td>Gradle Tasks</td>
+<td>프로젝트내의 Dependencies 설정과 빌드, 테스트, 배포 자동화를 위한 요구사항 정의</td>
+</tr>
+<tr>
+<td>TDD &amp; 단위 테스트</td>
+<td>테스트 주도 개발을 통한 인터페이스 설계, 직관적인 개발 및 지속적인 Test Coverage 확인</td>
+</tr>
+<tr>
+<td>통합테스트</td>
+<td><code>Spring Boot 테스트</code> <code>Spring MVC 테스트</code></td>
+</tr>
+<tr>
+<td>CI</td>
+<td>지속적인 통합을 위한 Jenkins와 같은 빌드 서버 구성</td>
+</tr>
+<tr>
+<td>QP</td>
+<td><code>Checkstyle</code> <code>Klockwork</code> <code>Jacoco</code>를 통한 다양한 Quality Practice에 대한 Report 생성</td>
+</tr>
+<tr>
+<td>Deploy</td>
+<td>Embedded Tomcat을 이용한 배포</td>
+</tr>
+</tbody>
+</table>
+</div></article></div></main><footer><div class="paginator"><a class="prev" href="/2015/11/12/spring-boot-mybatis-typehandler/"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><a class="next" href="/2016/10/03/devops-homebrew/"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></div><ins class="adsbygoogle adsense-bottom" style="display:block;" data-ad-client="ca-pub-6188640546219653" data-ad-slot="6129396565" data-ad-format="auto"></ins><div class="fb-comments-area"><div class="fb-comments" data-href="https://www.holaxprogramming.com/2015/11/20/spring-boot-what-is-next/" data-width="700" data-numposts="5"></div></div><div class="copyright"><p>© 2012 - 2022 <a href="https://github.com/stunstunstun" target="_blank">Minhyeok Jung</a>. Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/stunstunstun/hexo-theme-chiangmai" target="_blank">hexo-theme-chiangmai</a>.</p></div></footer></div><script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({});</script><script>window.fbAsyncInit=function(){FB.init({appId:"1258629384258634",cookie:!0,xfbml:!0,version:"v2.8"}),FB.AppEvents.logPageView()},function(e,n,t){var o,c=e.getElementsByTagName(n)[0];e.getElementById(t)||((o=e.createElement(n)).id=t,o.src="//connect.facebook.net/en_US/sdk.js",c.parentNode.insertBefore(o,c))}(document,"script","facebook-jssdk");</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create','UA-97419941-1','auto');ga('send','pageview');</script></body></html>
